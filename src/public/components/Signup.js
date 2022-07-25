@@ -12,7 +12,7 @@ import {
 import style from './../../styles';
 
 
-const Login = () => {
+const Signup = () => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const togglePassword = () => setShowPassword(!showPassword);
@@ -20,12 +20,14 @@ const Login = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: style.color.primary }}>
       <View style={{ flex: 1, paddingHorizontal: 20, backgroundColor: 'red', width: '100%', backgroundColor: style.color.primary, justifyContent: 'center' }}>
-        <Text style={{ ...style.text.subtitle, color: style.color.secondary }}>¡Hola!</Text>
-        <Text style={{ ...style.text.sm, color: style.color.secondary }}>Loguéate para acceder.</Text>
+        <Text style={{ ...style.text.subtitle, color: style.color.secondary }}>¡Bienvenido!</Text>
+        <Text style={{ ...style.text.sm, color: style.color.secondary }}>Por favor, rellena los campos para registrarte.</Text>
       </View>
-      <View style={{ flex: 3, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+      <View style={{ flex: 4, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
         <Center>
           <Stack mt={2} space={4} w="100%" maxW="400px">
+            <Input size="lg" variant="underlined" placeholder="Nombre" />
+            <Input size="lg" variant="underlined" placeholder="Apellido" />
             <Input size="lg" variant="underlined" placeholder="Email" />
             <Box>
               <Input type={showPassword ? "text" : "password"} size="lg" variant="underlined" 
@@ -36,18 +38,12 @@ const Login = () => {
                 } 
                 placeholder="Contraseña" />
             </Box>
-          <Pressable onPress={() => console.log("I'm Pressed")}>
-            <Text style={{ ...style.text.xs, textAlign: 'right', color: style.color.primary, fontWeight: 'bold' }}>¿Olvidaste tu contraseña?</Text>
-          </Pressable>
-          <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Acceder</Button>
+          <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Registrarse</Button>
           </Stack>
         </Center>
-      </View>
-      <View style={{ flex: 1, paddingHorizontal: 20, width: '100%', backgroundColor: 'white', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <Text style={{ ...style.text.xs }}>¿Aún no tienes una cuenta? <Text style={{ ...style.text.sm, color: style.color.primary, fontWeight: 'bold' }}>Regístrate aquí</Text></Text>
       </View>
     </View>
   );
 };
 
-export default Login;
+export default Signup;

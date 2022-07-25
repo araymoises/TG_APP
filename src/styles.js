@@ -7,22 +7,16 @@ const styles = {
     primary: {
       position: 'relative',
       width: 'auto',
-      height: '45px',
-      left: '28px',
-      top: '198px',
 
-      color: '#F1F1F1',
+      backgroundColor: '#00326F',
       fontFamily: 'SF Pro',
       fontStyle: 'normal',
     },
     secondary: {
       position: 'relative',
       width: 'auto',
-      height: '45px',
-      left: '28px',
-      top: '198px',
       
-      color: '#00326F',
+      backgroundColor: '#F1F1F1',
       fontFamily: 'SF Pro',
       fontStyle: 'normal',
     },
