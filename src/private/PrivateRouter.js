@@ -2,9 +2,10 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Home from './components/Home';
-import Template from './components/Template';
 import ClassroomsList from './components/ClassroomsList';
 import ClassroomRouter from './components/classroom/ClassroomRouter';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import style from '../styles';
 
 const PrivateRouter = () => {
   const Drawer = createDrawerNavigator();
@@ -15,10 +16,9 @@ const PrivateRouter = () => {
         headerTitleAlign: 'left',
         headerTransparent: true,
       }}>
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Template" component={Template} />
-      <Drawer.Screen name="ClassroomsList" component={ClassroomsList} />
-      <Drawer.Screen name="ClassroomRouter" component={ClassroomRouter} />
+      <Drawer.Screen name="Home" component={Home} options={{ drawerLabel: 'Home', drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
+      <Drawer.Screen name="ClassroomsList" component={ClassroomsList} options={{ drawerLabel: 'Aulas', drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
+      <Drawer.Screen name="ClassroomRouter" component={ClassroomRouter} options={{ drawerLabel: 'ClassroomRouter', drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
     </Drawer.Navigator>
   );
 };
