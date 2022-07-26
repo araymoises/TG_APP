@@ -1,16 +1,15 @@
 import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import {
   Text,
   View,
 } from 'native-base';
 
-const Home = () => {
+const ClassroomDetail = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen Private</Text>
+      <Text>ClassroomDetail Screen</Text>
     </View>
   );
 };
 
-export default Home;
+export default ClassroomDetail;

@@ -1,18 +1,25 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Home from './components/Home';
 import Template from './components/Template';
+import ClassroomsList from './components/ClassroomsList';
+import ClassroomRouter from './components/classroom/ClassroomRouter';
 
 const PrivateRouter = () => {
-  const Stack = createNativeStackNavigator();
+  const Drawer = createDrawerNavigator();
 
   return (
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Template" component={Template} />
-      </Stack.Navigator>
+    <Drawer.Navigator initialRouteName="Home" 
+      options={{
+        headerTitleAlign: 'left',
+        headerTransparent: true,
+      }}>
+      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Template" component={Template} />
+      <Drawer.Screen name="ClassroomsList" component={ClassroomsList} />
+      <Drawer.Screen name="ClassroomRouter" component={ClassroomRouter} />
+    </Drawer.Navigator>
   );
 };
 
