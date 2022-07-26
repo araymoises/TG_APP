@@ -4,11 +4,12 @@ import {
   View,
 } from 'native-base';
 
-function Template() {
+const Template = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Template Screen</Text>
     </View>
   );
-}
+};
+
 export default Template;

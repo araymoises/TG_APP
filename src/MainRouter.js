@@ -12,7 +12,7 @@ const MainRouter = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="PublicRouter">
+      <Stack.Navigator initialRouteName="PrivateRouter">
         <Stack.Screen name="PublicRouter" component={PublicRouter} options={{ headerShown: false }} />
         <Stack.Screen name="PrivateRouter" component={PrivateRouter} options={{ headerShown: false }} />
       </Stack.Navigator>
