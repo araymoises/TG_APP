@@ -27,28 +27,36 @@ const styles = {
       fontStyle: 'normal',
       fontWeight: '400',
       fontSize: 10,
-      color: '#7C7C7C'
+      color: '#7C7C7C',
+      lineHeight: 10 * 0.75,
+      paddingTop: 10 - (10 * 0.75),
     },
     sm: {
       fontFamily: 'Inter',
       fontStyle: 'normal',
       fontWeight: '400',
       fontSize: 14,
-      color: '#404040'
+      color: '#404040',
+      lineHeight: 14 * 0.75,
+      paddingTop: 14 - (14 * 0.75),
     },
     subtitle: {
       fontFamily: 'Inter',
       fontStyle: 'normal',
       fontWeight: '400',
       fontSize: 20,
-      color: '#4B4B4B'
+      color: '#4B4B4B',
+      lineHeight: 20 * 0.75,
+      paddingTop: 20 - (20 * 0.75),
     },
     title: {
       fontFamily: 'Inter',
       fontStyle: 'normal',
       fontWeight: '400',
       fontSize: 30,
-      color: '#242424'
+      color: '#242424',
+      lineHeight: 30 * 0.75,
+      paddingTop: 30 - (30 * 0.75),
     },
   }
 };
