@@ -18,7 +18,7 @@ const PrivateRouter = () => {
       }}>
       <Drawer.Screen name="Home" component={Home} options={{ drawerLabel: 'Home', drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
       <Drawer.Screen name="ClassroomsList" component={ClassroomsList} options={{ drawerLabel: 'Aulas', drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
-      <Drawer.Screen name="ClassroomRouter" component={ClassroomRouter} options={{ drawerLabel: 'ClassroomRouter', drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
+      <Drawer.Screen name="ClassroomRouter" component={ClassroomRouter} options={{ drawerLabel: 'ClassroomRouter', drawerItemStyle: { display: 'none', height: 0 } , drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
     </Drawer.Navigator>
   );
 };

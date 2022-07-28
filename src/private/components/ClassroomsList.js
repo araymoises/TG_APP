@@ -15,13 +15,14 @@ import style from '../../styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Classrooms = () => {
+const Classrooms = ({ navigation }) => {
   const onCreate = () => {
     console.log('Nuevo elemento.');
   }
   
   const onPressElement = (event) => {
     console.log('Pesionando elemento.');
+    navigation.navigate('ClassroomRouter');
   }
 
   return (

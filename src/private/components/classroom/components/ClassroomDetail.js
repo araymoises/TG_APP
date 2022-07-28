@@ -8,7 +8,7 @@ import randomColor from '../../../../services/colorNames';
 
 const ClassroomDetail = () => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
       <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
         <View style={{ backgroundColor: randomColor(), height: 150, width: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 74,
   elevation: 5,

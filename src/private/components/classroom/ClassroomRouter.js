@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import ClassroomDetail from './components/ClassroomDetail';
 import StudentsList from './components/StudentsList';
@@ -8,17 +8,20 @@ import style from '../../../styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PrivateRouter = () => {
-  const Tab = createBottomTabNavigator();
-  // const myIcon = <Icon name="rocket" size={30} color="#900" />;
+  const Tab = createMaterialTopTabNavigator();
 
   return (
-    <Tab.Navigator initialRouteName="ClassroomDetail" 
+    <Tab.Navigator initialRouteName="ClassroomDetail" tabBarPosition='bottom' tabBarStyle={{ height:100 }}
+      screenOptions={{
+        tabBarLabelStyle: { ...style.text.xs },
+        tabBarStyle: { height: 55 },
+      }}
       options={{
         headerTitleAlign: 'left',
         headerTransparent: true,
       }}>
-      <Tab.Screen name="ClassroomDetail" component={ClassroomDetail} options={{ headerShown: false, tabBarLabel: 'Información', tabBarIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
-      <Tab.Screen name="StudentsList" component={StudentsList} options={{ headerShown: false, tabBarLabel: 'Alumnos', tabBarIcon: ({ color, size }) => (<Icon name="child" size={30} color={style.color.primary} /> ) }} />
+      <Tab.Screen name="ClassroomDetail" component={ClassroomDetail} options={{ headerShown: false, tabBarLabel: 'Información', tabBarIcon: ({ color, size }) => (<Icon name="graduation-cap" size={20} color={style.color.primary} /> ) }} />
+      <Tab.Screen name="StudentsList" component={StudentsList} options={{ headerShown: false, tabBarLabel: 'Alumnos', tabBarIcon: ({ color, size }) => (<Icon name="child" size={20} color={style.color.primary} /> ) }} />
     </Tab.Navigator>
   );
 };

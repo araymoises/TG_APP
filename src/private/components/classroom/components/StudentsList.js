@@ -26,13 +26,13 @@ const StudentsList = () => {
   }
 
   return (
-    <View style={{ flex: 1 }} >
+    <View style={{ flex: 1, backgroundColor: 'white' }} >
       <ScrollView h="80" _contentContainerStyle={{
         mb: "4",
         minW: "100%",
         alignItems: 'center', justifyContent: 'flex-start'
       }}>
-        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ flex: 1 }}>
               <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
@@ -45,7 +45,7 @@ const StudentsList = () => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ flex: 1 }}>
               <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
@@ -57,7 +57,7 @@ const StudentsList = () => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ flex: 1 }}>
               <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
@@ -69,7 +69,7 @@ const StudentsList = () => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ flex: 1 }}>
               <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
@@ -81,7 +81,7 @@ const StudentsList = () => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ flex: 1 }}>
               <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
@@ -93,7 +93,7 @@ const StudentsList = () => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ flex: 1 }}>
               <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
@@ -105,7 +105,7 @@ const StudentsList = () => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+        <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ flex: 1 }}>
               <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
