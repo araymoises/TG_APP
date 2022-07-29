@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -16,13 +16,20 @@ import style from '../../../../styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import randomColor from '../../../../services/colorNames';
 
+// import { useSelector, useDispatch } from 'react-redux';
+// import { decrement, increment } from './../../../../redux/reducers/counterSlice';
+
 const StudentsList = () => {
+  // const count = useSelector((state) => state.counter.value);
+  // const dispatch = useDispatch();
+
   const onCreate = () => {
     console.log('Nuevo elemento.');
   }
   
   const onPressElement = (event) => {
     console.log('Pesionando elemento.');
+    // dispatch(increment());
   }
 
   return (
