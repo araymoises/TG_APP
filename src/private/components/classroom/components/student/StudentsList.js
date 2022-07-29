@@ -11,20 +11,22 @@ import {
   ScrollView,
   Pressable,
 } from 'native-base';
-import style from '../../../../styles';
+import style from '../../../../../styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import randomColor from '../../../../services/colorNames';
+import randomColor from '../../../../../services/colorNames';
 
 // import { useSelector, useDispatch } from 'react-redux';
 // import { decrement, increment } from './../../../../redux/reducers/counterSlice';
 
-const StudentsList = () => {
+const StudentsList = ({ navigation }) => {
+  const navigate = navigation.navigate;
   // const count = useSelector((state) => state.counter.value);
   // const dispatch = useDispatch();
 
   const onCreate = () => {
     console.log('Nuevo elemento.');
+    navigate('PrivateRouter', { screen: 'StudentRouter' });
   }
   
   const onPressElement = (event) => {

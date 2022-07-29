@@ -16,13 +16,15 @@ import style from '../../styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Classrooms = ({ navigation }) => {
+  const navigate = navigation.navigate;
+
   const onCreate = () => {
     console.log('Nuevo elemento.');
   }
   
   const onPressElement = (event) => {
     console.log('Pesionando elemento.');
-    navigation.navigate('ClassroomRouter');
+    navigate('ClassroomRouter');
     // navigation.navigate('PublicRouter', { screen: 'Login' });
   }
 
