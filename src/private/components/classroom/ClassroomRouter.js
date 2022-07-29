@@ -35,7 +35,6 @@ const PrivateRouter = () => {
         component={StudentsList} 
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Listado de alumnos'))} })} 
         options={{ headerShown: false, tabBarLabel: 'Alumnos', tabBarIcon: ({ color, size }) => (<Icon name="child" size={20} color={style.color.primary} /> ) }} />
-      }}>
       <Tab.Screen name="ContentsList" component={ContentsList} options={{ headerShown: false, tabBarLabel: 'Contenidos', tabBarIcon: ({ color, size }) => (<Icon name="book" size={20} color={style.color.primary} /> ) }} />
     </Tab.Navigator>
   );
