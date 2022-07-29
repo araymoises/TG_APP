@@ -2,7 +2,7 @@ const styles = {
   color: {
     primary: "#00326F",
     secondary: "#F1F1F1",
-    tertiary:"#626EE0",
+    tertiary: "#626EE0",
   },
   button: {
     primary: {
