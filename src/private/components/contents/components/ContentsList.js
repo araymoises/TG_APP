@@ -39,7 +39,6 @@ const ContentsList = () => {
             resizeMode="cover"
             mx="auto"
             />
-      <Text mt={2} style={{fontWeight: 'bold', fontSize: 20}}>Contenidos</Text>
       { 
         content.map(item => {
           return(
