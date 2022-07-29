@@ -2,6 +2,7 @@ const styles = {
   color: {
     primary: "#00326F",
     secondary: "#F1F1F1",
+    tertiary:"#626EE0",
   },
   button: {
     primary: {
@@ -50,7 +51,16 @@ const styles = {
       fontSize: 30,
       color: '#242424'
     },
-  }
+  },
+  item: {
+    marginTop:24,
+    padding:20,
+    backgroundColor:'#22A7F0',
+    fontSize:16,
+    color: 'white',
+
+
+  },
 };
 
 export default styles;
