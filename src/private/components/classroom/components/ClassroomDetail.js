@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -11,8 +11,8 @@ const ClassroomDetail = () => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
       <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
         <View style={{ backgroundColor: randomColor(), height: 150, width: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 74,
-  elevation: 5,
-}}>
+          elevation: 5,
+        }}>
         
           {/* <Icon name="graduation-cap" size={40} color="#F6F6F6" /> */}
           <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>1º A</Text>

@@ -23,6 +23,7 @@ const Classrooms = ({ navigation }) => {
   const onPressElement = (event) => {
     console.log('Pesionando elemento.');
     navigation.navigate('ClassroomRouter');
+    // navigation.navigate('PublicRouter', { screen: 'Login' });
   }
 
   return (
@@ -30,7 +31,8 @@ const Classrooms = ({ navigation }) => {
       <ScrollView h="80" _contentContainerStyle={{
         mb: "4",
         minW: "100%",
-        alignItems: 'center', justifyContent: 'flex-start'
+        alignItems: 'center', 
+        justifyContent: 'flex-start'
       }}>
         <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
           <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
