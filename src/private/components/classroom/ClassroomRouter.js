@@ -7,7 +7,7 @@ import ActivitiesList from './components/activity/ActivitiesList';
 import style from '~styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { setClassroomTitle } from './../../../redux/reducers/classroomTitle';
-import ContentsList  from '../contents/components/ContentsList';
+import ContentsList from './components/contents/ContentsList';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 

@@ -5,18 +5,17 @@ import {
   Stack, 
   Center,
   Button,
+  TextArea,
   Image,
 } from 'native-base';
 import style from '~styles';
 
-const CreateActivity = () => {
-
-
-  const selected= require('./images/activity.png')
+const CreateContents = () => {
+  const selected= require('./images/book.png')
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
       <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
-            <Image
+          <Image
                 justifyContent="center"
                 alignItems="center"
                 source={selected}
@@ -26,14 +25,11 @@ const CreateActivity = () => {
                 resizeMode="cover"
                 mx="auto"
             />
-        
         <Center>
           <Stack mt={2} space={4} w="100%" maxW="400px">
-            <Input size="lg" variant="underlined" placeholder="Nombre de la actividad" />
-            <Input size="lg" variant="underlined" placeholder="Tipo de actividad" />
-            <Input size="lg" variant="underlined" placeholder="Ponderación" />
-
-            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Crear</Button>
+            <Input size="lg" variant="underlined" placeholder="Título" />
+            <TextArea size="lg" variant="underlined" placeholder="Contenido"/>
+            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Guardar</Button>
           </Stack>
         </Center>
       </View>
@@ -41,4 +37,4 @@ const CreateActivity = () => {
   );
 };
 
-export default CreateActivity;
+export default CreateContents;
