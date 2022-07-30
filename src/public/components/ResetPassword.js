@@ -9,7 +9,7 @@ import {
   Image,
   ScrollView,
 } from 'native-base';
-import style from './../../styles';
+import style from '~styles';
 
 
 const ForgotPassword = () => {

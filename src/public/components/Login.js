@@ -9,7 +9,7 @@ import {
   Box,
   Pressable,
 } from 'native-base';
-import style from './../../styles';
+import style from '~styles';
 
 
 const Login = () => {

@@ -9,8 +9,8 @@ import {
     Stack,
     Button,
   } from 'native-base';
-  import style from '../../../../styles';
-  import Icon from 'react-native-vector-icons/FontAwesome';
+import style from '~styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ContentsList = () => {
     const selected= require('./images/contents.png')

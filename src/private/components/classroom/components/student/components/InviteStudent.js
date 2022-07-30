@@ -6,7 +6,7 @@ import {
   Center,
   Button,
 } from 'native-base';
-import style from '../../../../../../styles';
+import style from '~styles';
 
 const InviteStudent = () => {
   return (

@@ -11,7 +11,8 @@ import {
   ScrollView,
   Pressable,
 } from 'native-base';
-import style from '../../styles';
+import style from '~styles';
+
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 

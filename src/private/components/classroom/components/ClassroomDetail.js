@@ -3,7 +3,7 @@ import {
   Text,
   View,
 } from 'native-base';
-import style from '../../../../styles';
+import style from '~styles';
 import randomColor from '../../../../services/colorNames';
 
 const ClassroomDetail = () => {

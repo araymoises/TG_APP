@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ClassroomDetail from './components/ClassroomDetail';
 import StudentsList from './components/student/StudentsList';
 import ActivitiesList from './components/activity/ActivitiesList';
-import style from '../../../styles';
+import style from '~styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { setClassroomTitle } from './../../../redux/reducers/classroomTitle';
 import ContentsList  from '../contents/components/ContentsList';
