@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import {
+  Text,
+  View,
+} from 'native-base';
 import {
   ViroARScene,
   ViroText,
@@ -9,7 +13,7 @@ import {
 
 const HelloWorldSceneAR = () => {
   const [text, setText] = useState('Initializing AR...');
-
+  
   function onInitialized(state, reason) {
     console.log('guncelleme', state, reason);
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
@@ -32,14 +36,22 @@ const HelloWorldSceneAR = () => {
 };
 
 export default () => {
+  const osVersion = Platform.constants['Release'];
+  
   return (
-    <ViroARSceneNavigator
-      autofocus={true}
-      initialScene={{
-        scene: HelloWorldSceneAR,
-      }}
-      style={styles.f1}
-    />
+    osVersion >= 8 ? (
+      <ViroARSceneNavigator
+        autofocus={true}
+        initialScene={{
+          scene: HelloWorldSceneAR,
+        }}
+        style={styles.f1}
+      />
+    ) : (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Realidad aumentada no disponible en este dispositivo.</Text>
+      </View>
+    )
   );
 };
 
