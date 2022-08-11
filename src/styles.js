@@ -59,6 +59,13 @@ const styles = {
       lineHeight: 30 * 0.75,
       paddingTop: 30 - (30 * 0.75),
     },
+    smSelect: {
+      fontFamily: 'Inter',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: 14,
+      color: '#404040',
+    },
   },
   item: {
     marginTop:24,

@@ -47,9 +47,9 @@ const Classrooms = ({ navigation }) => {
               </View>
             </View>
             <View style={{ flex: 5, paddingLeft: 10 }}>
-              <Text style={{ ...style.text.subtitle, fontWeight: 'bold' }}>Mariano Picón Salas</Text>
-              <Text style={{ ...style.text.sm }}>Cantidad de alumnos: 32</Text>
-              <Text style={{ ...style.text.sm }}>Progreso: 42%</Text>
+              <Text mt={2} style={{ ...style.text.subtitle, fontWeight: 'bold' }}>Mariano Picón Salas</Text>
+              <Text mt={2} style={{ ...style.text.sm }}>Cantidad de alumnos: 32</Text>
+              <Text mt={2} style={{ ...style.text.sm }}>Progreso: 42%</Text>
             </View>
           </Pressable>
         </VStack>
@@ -62,9 +62,9 @@ const Classrooms = ({ navigation }) => {
               </View>
             </View>
             <View style={{ flex: 5, paddingLeft: 10  }}>
-              <Text style={{ ...style.text.subtitle, fontWeight: 'bold' }}>Joaquina Sánchez</Text>
-              <Text style={{ ...style.text.sm }}>Cantidad de alumnos: 26</Text>
-              <Text style={{ ...style.text.sm }}>Progreso: 35%</Text>
+              <Text mt={2} style={{ ...style.text.subtitle, fontWeight: 'bold' }}>Joaquina Sánchez</Text>
+              <Text mt={2} style={{ ...style.text.sm }}>Cantidad de alumnos: 26</Text>
+              <Text mt={2} style={{ ...style.text.sm }}>Progreso: 35%</Text>
             </View>
           </Pressable>
         </VStack>
