@@ -15,7 +15,6 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "@reduxjs/toolkit": "^1.8.3",
-    "@viro-community/react-viro": "^2.23.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "native-base": "3.4.0",
     "react": "17.0.1",
