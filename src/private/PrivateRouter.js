@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Home from './components/Home';
+import Settings from './components/Settings';
+import About from './components/About';
+import Logout from './components/Logout';
+
 import ClassroomsList from './components/ClassroomsList';
 import ClassroomRouter from './components/classroom/ClassroomRouter';
 import ActivityRouter from './components/classroom/components/activity/ActivityRouter';
@@ -23,6 +27,9 @@ const PrivateRouter = () => {
       }}>
       <Drawer.Screen name="Home" component={Home} options={{ drawerLabel: 'Home', drawerIcon: ({ color, size }) => (<Icon name="graduation-cap" size={30} color={style.color.primary} /> ) }} />
       <Drawer.Screen name="ClassroomsList" component={ClassroomsList} options={{ title: 'Aulas', drawerLabel: 'Aulas', drawerIcon: ({ color, size }) => (<Icon name="institution" size={30} color={style.color.primary} /> ) }} />
+      <Drawer.Screen name="Settings" component={Settings} options={{ title: 'Perfil', drawerLabel: 'Perfil', drawerIcon: ({ color, size }) => (<Icon name="user-circle" size={30} color={style.color.primary} /> ) }} />
+      <Drawer.Screen name="About" component={About} options={{ title: 'Sobre nosotros', drawerLabel: 'Sobre nosotros', drawerIcon: ({ color, size }) => (<Icon name="question" size={30} color={style.color.primary} /> ) }} />
+      <Drawer.Screen name="Logout" component={Logout} options={{ title: 'Cerrar sesión', drawerLabel: 'Cerrar sesión', drawerIcon: ({ color, size }) => (<Icon name="sign-out" size={30} color={style.color.primary} /> ) }} />
 
 
       {/* Invisible items */}

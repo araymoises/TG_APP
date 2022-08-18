@@ -3,6 +3,7 @@ const styles = {
     primary: "#00326F",
     secondary: "#F1F1F1",
     tertiary: "#626EE0",
+    amber:"#fcd34d",
   },
   button: {
     primary: {
