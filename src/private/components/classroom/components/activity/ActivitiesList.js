@@ -30,7 +30,8 @@ const ActivitiesList = ({ navigation }) => {
   }
   
   const onPressElement = (event) => {
-    console.log('Pesionando elemento.');
+    console.log('Va a la vista de finalizacion de actividad.');
+    navigate('ActivityRouter', { screen: 'ActivityCompletion' });
     // dispatch(increment());
   }
 
