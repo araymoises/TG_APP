@@ -11,6 +11,8 @@ import ClassroomRouter from './components/classroom/ClassroomRouter';
 import ActivityRouter from './components/classroom/components/activity/ActivityRouter';
 import StudentRouter from './components/classroom/components/student/StudentRouter';
 import ContentsRouter from './components/classroom/components/contents/ContentsRouter';
+import ProfileRouter from './components/profile/ProfileRouter';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from 'react-redux';
 import style from '../styles';
@@ -37,6 +39,7 @@ const PrivateRouter = () => {
       <Drawer.Screen name="ActivityRouter" component={ActivityRouter} options={{ title: classroomTitle, drawerLabel: 'ActivityRouter', drawerItemStyle: { display: 'none', height: 0 } }} />
       <Drawer.Screen name="StudentRouter" component={StudentRouter} options={{ title: classroomTitle, drawerLabel: 'StudentRouter', drawerItemStyle: { display: 'none', height: 0 } }} />
       <Drawer.Screen name="ContentsRouter" component={ContentsRouter} options={{ title: classroomTitle, drawerLabel: 'ContentsRouter', drawerItemStyle: { display: 'none', height: 0 } }} />
+      <Drawer.Screen name="ProfileRouter" component={ProfileRouter} options={{ title: classroomTitle, drawerLabel: 'ProfileRouter', drawerItemStyle: { display: 'none', height: 0 } }} />
     </Drawer.Navigator>
   );
 };
