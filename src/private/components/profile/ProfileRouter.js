@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { setClassroomTitle } from './../../../redux/reducers/classroomTitle';
 import ProfileEdit from './components/ProfileEdit';
+import ResetPassword from './components/ResetPassword';
 
 const ProfileRouter = () => {
   const Stack = createNativeStackNavigator();
@@ -15,7 +16,12 @@ const ProfileRouter = () => {
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Editar perfil'))} })} 
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="ResetPassword" component={ResetPassword}
+        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Cambiar contraseña'))} })} 
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
+    
   );
 };
 

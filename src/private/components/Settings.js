@@ -31,6 +31,13 @@ const Settings = ({ navigation }) => {
     navigate('ProfileRouter', { screen: 'ProfileEdit' });
   }
 
+  const onResetPassword = (event) => {
+    console.log('Cambiar password');
+
+    navigate('ProfileRouter', { screen: 'ResetPassword' });
+  }
+
+ 
   return (
     <ScrollView contentContainerStyle={{  flexGrow: 1,justifyContent: 'flex-start', paddingHorizontal:20,paddingVertical:20}}>
         <Center>
@@ -95,7 +102,7 @@ const Settings = ({ navigation }) => {
                     </Pressable>
                   </VStack>
                   <VStack mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '100%', borderRadius: 5 }}>
-                    <Pressable paddingLeft={2} style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
+                    <Pressable paddingLeft={2} style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onResetPassword(event)}>
                     <View style={{ backgroundColor: style.color.primary, height: 50, width: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
                         <Text  style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>
                             <Icon name="edit" size={20} color={style.color.amber}/>
