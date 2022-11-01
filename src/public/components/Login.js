@@ -9,10 +9,11 @@ import {
   Box,
   Pressable,
   Image,
-  ScrollView
+  ScrollView,
 } from 'native-base';
 import style from '~styles';
-
+  
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Login = ({ navigation}) => {
 
@@ -65,8 +66,8 @@ const Login = ({ navigation}) => {
             <Box>
               <Input type={showPassword ? "text" : "password"} size="lg" variant="underlined" 
                 InputRightElement={
-                  <Button style={{ backgroundColor: style.color.primary }} size="sm" rounded="none" w="1/6" h="full" onPress={togglePassword}>
-                    {showPassword ? "Ocultar" : "Mostrar"}
+                  <Button style={{ backgroundColor: 'white' }} size="sm" rounded="none" w="1/6" h="full" onPress={togglePassword}>
+                    {showPassword ? <Icon name="eye-slash" size={20} color={style.color.primary}/> : <Icon name="eye" size={20} color={style.color.primary}/>}
                   </Button>
                 } 
                 placeholder="Contraseña" />

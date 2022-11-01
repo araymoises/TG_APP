@@ -4,6 +4,7 @@ const styles = {
     secondary: "#F1F1F1",
     tertiary: "#626EE0",
     amber:"#fcd34d",
+    white: "#FFF",
   },
   button: {
     primary: {
