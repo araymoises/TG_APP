@@ -19,11 +19,13 @@ import {
 
 const HelloWorldSceneAR = () => {
   const [text, setText] = useState('Initializing AR...');
+  const [questionText, setQuestionText] = useState('');
   
   function onInitialized(state, reason) {
     console.log('guncelleme', state, reason);
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
       setText('Actividad #1');
+      setQuestionText('que animal es este?')
     } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
       // Handle loss of tracking
     }
@@ -37,7 +39,13 @@ const HelloWorldSceneAR = () => {
         <ViroText
           text={text}
           scale={[0.5, 0.5, 0.5]}
-          position={[0.3, 1.5, 0]}
+          position={[0.3, 1.0, 0]}
+          style={styles.helloWorldTextStyle}
+        />
+        <ViroText
+          text={questionText}
+          scale={[0.1, 0.1, 0.1]}
+          position={[0.3, 0.7, 0]}
           style={styles.helloWorldTextStyle}
         />
         {/* <Viro3DObject
@@ -56,7 +64,7 @@ const HelloWorldSceneAR = () => {
           position={[0, -1, -1]}
           style={styles.helloWorldTextStyle}
         />  */}
-        <Viro3DObject
+        {/* <Viro3DObject
           source={require('./objects/dog/Doguinho.obj')}
           resources={[
             require('./objects/dog/Doguinho.mtl'),
@@ -72,29 +80,20 @@ const HelloWorldSceneAR = () => {
           rotationPivot={[0, 0, 0]}
           onClick={(position, source) => { console.log('Clickeando al perrito', position); }}
           style={styles.helloWorldTextStyle}
-        />
+        /> */}
         <Viro3DObject
-          source={require('./objects/dog/Doguinho.obj')}
+          source={require('./objects/falcon/halcon.obj')}
           resources={[
-            require('./objects/dog/Doguinho.mtl'),
-            require('./objects/dog/Doguinho_low_poly_doguinho_uv_BaseColor.png'),
-            require('./objects/dog/Doguinho_low_poly_doguinho_uv_Height.png'),
-            require('./objects/dog/Doguinho_low_poly_doguinho_uv_Metallic.png'),
-            require('./objects/dog/Doguinho_low_poly_doguinho_uv_Normal.png'),
-            require('./objects/dog/Doguinho_low_poly_doguinho_uv_Roughness.png'),
+            require('./objects/falcon/halcon.mtl'),
           ]}
           type="OBJ"
-          // physicsBody={{
-          //   type:'Dynamic', 
-          //   mass:1,
-          //   viroTag:"MySpecialBox",
-          // }}
-          scale={[0.1, 0.1, 0.1]}
-          position={[0.5, 0, 0]}
+          scale={[0.4, 0.4, 0.4]}
+          position={[0, 0, 0]}
           rotationPivot={[0, 0, 0]}
-          onClick={(position, source) => { console.log('Clickeando al perrito', position); }}
+          onClick={(position, source) => { console.log('Clickeando al objeto', position); }}
           style={styles.helloWorldTextStyle}
         />
+
       </ViroARPlaneSelector>
     </ViroARScene>
   );
@@ -125,6 +124,13 @@ var styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'Arial',
     fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+  helloWorldTextStyle: {
+    fontFamily: 'Arial',
+    fontSize: 20,
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',
