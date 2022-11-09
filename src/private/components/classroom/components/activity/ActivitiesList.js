@@ -31,8 +31,10 @@ const ActivitiesList = ({ navigation }) => {
   
   const onPressElement = (event) => {
     console.log('Va a la vista de finalizacion de actividad.');
-    navigate('ActivityRouter', { screen: 'ActivityCompletion' });
+   // navigate('ActivityRouter', { screen: 'ActivityCompletion' });
     // dispatch(increment());
+
+    navigate('ActivityRouter', { screen: 'ActivityDetailTeacher' });
   }
 
   return (
