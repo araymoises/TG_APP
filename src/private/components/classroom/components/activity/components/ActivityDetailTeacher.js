@@ -78,7 +78,7 @@ const ActivityDetailTeacher = () => {
                             <Select.Item label="Tipos de deporte" value="4" />
                             <Select.Item label="Dibujo artístico y el color" value="5" />
                             <Select.Item label="Historia de Venezuela" value="6" />
-                            <Select.Item label="La familia en inglés" value="7" />
+                            <Select.Item label="La familia" value="7" />
                             <Select.Item label="Números y operaciones" value="8" />
                             <Select.Item label="Música tradicional" value="9" />
                             <Select.Item label="Tipología climática" value="10" />

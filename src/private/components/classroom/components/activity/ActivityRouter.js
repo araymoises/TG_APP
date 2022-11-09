@@ -7,6 +7,7 @@ import { setClassroomTitle } from './../../../../../redux/reducers/classroomTitl
 import CreateActivity from './components/CreateActivity';
 import ActivityCompletion from './components/ActivityCompletion';
 import ActivityDetailTeacher from './components/ActivityDetailTeacher';
+import ActivityDetailStudent from './components/ActivityDetailStudent';
 const ActivityRouter = () => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
@@ -19,6 +20,11 @@ const ActivityRouter = () => {
       />
 
       <Stack.Screen name="ActivityDetailTeacher" component={ActivityDetailTeacher}
+        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Detalle de la actividad'))} })} 
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen name="ActivityDetailStudent" component={ActivityDetailStudent}
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Detalle de la actividad'))} })} 
         options={{ headerShown: false }}
       />

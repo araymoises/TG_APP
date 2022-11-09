@@ -34,7 +34,7 @@ const ActivitiesList = ({ navigation }) => {
    // navigate('ActivityRouter', { screen: 'ActivityCompletion' });
     // dispatch(increment());
 
-    navigate('ActivityRouter', { screen: 'ActivityDetailTeacher' });
+    navigate('ActivityRouter', { screen: 'ActivityDetailStudent' });
   }
 
   return (
