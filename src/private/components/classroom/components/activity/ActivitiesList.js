@@ -25,8 +25,8 @@ const ActivitiesList = ({ navigation }) => {
   // const dispatch = useDispatch();
 
   const onCreate = () => {
-    console.log('Nuevo elemento.');
-    navigate('PrivateRouter', { screen: 'ActivityRouter' });
+    console.log('Nueva aula');
+    navigate('ActivityRouter', { screen: 'CreateActivity' });
   }
   
   const onPressElement = (event) => {
