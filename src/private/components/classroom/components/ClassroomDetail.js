@@ -99,8 +99,8 @@ const ClassroomDetail = () => {
       </View>
 
       <View style={{ flex: 2, width: '100%', padding: 20 }}>
-        <Text mt={2} style={{ ...style.text.title}}>Mariano Picón Salas</Text>
-        <Text mt={2} style={{ ...style.text.subtitle}}>1º A</Text>
+        <Text mt={2} style={{ ...style.text.subtitle}}>U.E Doctor José Antonio Abreu</Text>
+        <Text mt={2} style={{ ...style.text.md, fontWeight: 'bold'}}>1º A</Text>
         <Divider my={1} />
       </View>
 

@@ -43,6 +43,15 @@ const styles = {
       lineHeight: 14 * 0.75,
       paddingTop: 14 - (14 * 0.75),
     },
+    md: {
+      fontFamily: 'Inter',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: 18,
+      color: '#4B4B4B',
+      lineHeight: 20 * 0.75,
+      paddingTop: 20 - (20 * 0.75),
+    },
     subtitle: {
       fontFamily: 'Inter',
       fontStyle: 'normal',
