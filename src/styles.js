@@ -3,6 +3,8 @@ const styles = {
     primary: "#00326F",
     secondary: "#F1F1F1",
     tertiary: "#626EE0",
+    amber:"#fcd34d",
+    white: "#FFF",
   },
   button: {
     primary: {
@@ -41,6 +43,15 @@ const styles = {
       lineHeight: 14 * 0.75,
       paddingTop: 14 - (14 * 0.75),
     },
+    md: {
+      fontFamily: 'Inter',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: 18,
+      color: '#4B4B4B',
+      lineHeight: 20 * 0.75,
+      paddingTop: 20 - (20 * 0.75),
+    },
     subtitle: {
       fontFamily: 'Inter',
       fontStyle: 'normal',
@@ -58,6 +69,13 @@ const styles = {
       color: '#242424',
       lineHeight: 30 * 0.75,
       paddingTop: 30 - (30 * 0.75),
+    },
+    smSelect: {
+      fontFamily: 'Inter',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: 14,
+      color: '#404040',
     },
   },
   item: {

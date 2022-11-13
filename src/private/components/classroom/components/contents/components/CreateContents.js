@@ -7,14 +7,19 @@ import {
   Button,
   TextArea,
   Image,
+  ScrollView,
+
 } from 'native-base';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 import style from '~styles';
 
 const CreateContents = () => {
   const selected= require('./images/book.png')
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
-      <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
+    <ScrollView contentContainerStyle={{  flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
+      <View style={{ flex: 1, paddingHorizontal: 20,paddingVertical:20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
           <Image
                 justifyContent="center"
                 alignItems="center"
@@ -33,7 +38,7 @@ const CreateContents = () => {
           </Stack>
         </Center>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
