@@ -15,7 +15,7 @@ const ActivityCompletion = ({ route, navigation }) => {
   const navigate = navigation.navigate;
   const { isCorrect, value } = route.params;
   const correctAnswerImage = require('./images/activityCompletion.png')
-  const incorrectAnswerImage = require('./images/activityCompletion.png')
+  const incorrectAnswerImage = require('./images/activityFail.png')
 
   const onPressElement = () => {
     navigate('ActivitiesList');
