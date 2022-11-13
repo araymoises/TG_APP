@@ -17,7 +17,15 @@ import
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const ActivityDetailStudent = () => {
+const ActivityDetailStudent = ({ navigation }) => {
+  const navigate = navigation.navigate;
+
+  const onPressElement = (event) => {
+    console.log('Pesionando elementox2.');
+    navigate('ActivityView');
+    // navigation.navigate('PublicRouter', { screen: 'Login' });
+  }
+
   return (
         <ScrollView contentContainerStyle={{  flexGrow: 1,justifyContent: 'flex-start', paddingHorizontal:20,paddingVertical:20}}>
         <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:20, textAlign:'center'}} >Actividad: Reconociendo las Emociones</Text>
@@ -41,7 +49,7 @@ const ActivityDetailStudent = () => {
           <View style={{ flex: 1, justifyContent: 'center', width: '100%'}}>
                 <Center>
                   <Stack space={4} w="100%" maxW="400px">
-                    <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} rightIcon={<Icon name="play-circle" size={15} color={ style.color.secondary } />}>Realizar actividad</Button>
+                    <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} rightIcon={<Icon name="play-circle" size={15} color={ style.color.secondary } />} onPress={(event) => onPressElement(event)}>Realizar actividad</Button>
                   </Stack>
                 </Center>
           </View>

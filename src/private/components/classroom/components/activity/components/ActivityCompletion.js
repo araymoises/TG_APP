@@ -11,9 +11,13 @@ import {
 } from 'native-base';
 import style from '~styles';
 
-const ActivityCompletion = () => {
-
+const ActivityCompletion = ({ navigation }) => {
+  const navigate = navigation.navigate;
   const selected= require('./images/activityCompletion.png')
+
+  const onPressElement = () => {
+    navigate('ActivitiesList');
+  }
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -34,7 +38,7 @@ const ActivityCompletion = () => {
       <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
         <Center>
           <Stack space={4} w="100%" maxW="400px">
-            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Aceptar</Button>
+            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} onPress={() => onPressElement()}>Aceptar</Button>
           </Stack>
         </Center>
       </View>

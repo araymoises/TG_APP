@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setClassroomTitle } from './../../../../../redux/reducers/classroomTitle';
 
 import CreateActivity from './components/CreateActivity';
+import ActivityView from './components/Activity';
 import ActivityCompletion from './components/ActivityCompletion';
 import ActivityDetailTeacher from './components/ActivityDetailTeacher';
 import ActivityDetailStudent from './components/ActivityDetailStudent';
@@ -31,6 +32,11 @@ const ActivityRouter = () => {
 
       <Stack.Screen name="ActivityCompletion" component={ActivityCompletion}
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Actividad finalizada'))} })} 
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen name="ActivityView" component={ActivityView}
+        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Actividad en curso'))} })} 
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
