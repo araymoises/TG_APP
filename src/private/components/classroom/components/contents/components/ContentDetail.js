@@ -17,7 +17,8 @@ const ContentDetail = ({ navigation}) => {
 
   const onEdit = () => {
     console.log('Nuevo contenido.');
-    navigate('ContentsRouter', { screen: 'ContentEdit' });
+    //navigate('ContentsRouter', { screen: 'ContentEdit' });
+    navigate('ActivityView');
   }
   return (
     <View>
@@ -58,7 +59,7 @@ const ContentDetail = ({ navigation}) => {
           </View>
      
       </ScrollView>
-      <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="edit" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onEdit}>Editar Contenido</Button>
+      <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} rightIcon={<Icon name="play" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onEdit}>Realizar actividad</Button>
   </View>
 
 
