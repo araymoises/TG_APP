@@ -104,7 +104,7 @@ const ARActivity = () => {
             /> */}
 
             <Viro3DObject
-               source={require('./objects/falcon/halcon.obj')}
+               source={require('./objects/falcon/halcon2.obj')}
                resources={[
                   require('./objects/falcon/halcon.mtl'),
                ]}
