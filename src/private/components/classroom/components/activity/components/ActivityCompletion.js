@@ -11,9 +11,11 @@ import {
 } from 'native-base';
 import style from '~styles';
 
-const ActivityCompletion = ({ navigation }) => {
+const ActivityCompletion = ({ route, navigation }) => {
   const navigate = navigation.navigate;
-  const selected= require('./images/activityCompletion.png')
+  const { isCorrect, value } = route.params;
+  const correctAnswerImage = require('./images/activityCompletion.png')
+  const incorrectAnswerImage = require('./images/activityCompletion.png')
 
   const onPressElement = () => {
     navigate('ActivitiesList');
@@ -22,12 +24,13 @@ const ActivityCompletion = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
       <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}}>
-      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:20, textAlign:'center'}} >¡Felicidades!</Text>
-      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:20, textAlign:'center', marginTop:10}} >Has finalizado la actividad</Text>
+      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:21, textAlign:'center', marginTop:10}} >Has finalizado la actividad</Text>
+      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:18, textAlign:'center'}} >{ isCorrect ? 'Has respondido correctamente, ¡felicidades!' : 'Has respondido incorrectamente.'}</Text>
+      <Text style={{color:style.color.tertiary, fontWeight: 'bold', fontSize:18, textAlign:'center'}} >{ isCorrect ? '' : `Respuesta correcta: ${value}`}</Text>
       <Image
                 justifyContent="center"
                 alignItems="center"
-                source={selected}
+                source={isCorrect ? correctAnswerImage : incorrectAnswerImage}
                 alt="image"
                 size="2xl"
                 key="lg"

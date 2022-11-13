@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   value: 'Información',
+  isPlaneSelected: false,
 }
 
 export const classroomTitle = createSlice({
@@ -11,10 +12,13 @@ export const classroomTitle = createSlice({
     setClassroomTitle: (state, action) => {
       state.value = action.payload
     },
+    setPlaneSelected: (state, action) => {
+      state.isPlaneSelected = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setClassroomTitle } = classroomTitle.actions
+export const { setClassroomTitle, setPlaneSelected } = classroomTitle.actions
 
 export default classroomTitle.reducer
