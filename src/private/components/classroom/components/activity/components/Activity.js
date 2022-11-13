@@ -111,6 +111,7 @@ const Activity = ({ navigation }) => {
       navigate('ActivityCompletion');
     } else {
       console.log('Respuesta incorrecta.');
+      navigate('ActivityCompletion');
     }
   }
 
