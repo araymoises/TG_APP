@@ -7,16 +7,19 @@ import {
   Button,
   Image,
   ScrollView,
+  Text,
 } from 'native-base';
 import style from '~styles';
 
-const InviteStudent = () => {
+const ActivityCompletion = () => {
 
-  const selected= require('./images/invite.png')
+  const selected= require('./images/activityCompletion.png')
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
       <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}}>
+      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:20, textAlign:'center'}} >¡Felicidades!</Text>
+      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:20, textAlign:'center', marginTop:10}} >Has finalizado la actividad</Text>
       <Image
                 justifyContent="center"
                 alignItems="center"
@@ -31,9 +34,7 @@ const InviteStudent = () => {
       <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
         <Center>
           <Stack space={4} w="100%" maxW="400px">
-            <Input size="lg" variant="underlined" placeholder="Email del alumno" />
-
-            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Invitar</Button>
+            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Aceptar</Button>
           </Stack>
         </Center>
       </View>
@@ -41,4 +42,4 @@ const InviteStudent = () => {
   );
 };
 
-export default InviteStudent;
+export default ActivityCompletion;

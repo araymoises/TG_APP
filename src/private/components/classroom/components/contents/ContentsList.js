@@ -18,26 +18,29 @@ const ContentsList = ({ navigation }) => {
    const navigate = navigation.navigate;
     const selected= require('./components/images/contents.png')
     const [content, setContent] = useState([
-      { name: 'Castellano',icon:'language', key:1},
-      { name: 'Ciencias naturales', icon:'tree', key:2},
-      { name: 'Computación',icon:'desktop', key:3},
-      { name: 'Deporte',icon:'soccer-ball-o', key:4},
-      { name: 'Dibujo',icon:'paint-brush', key:5},
-      { name: 'Historia',icon:'file-text', key:6},
-      { name: 'Inglés',icon:'comments-o', key:7},      
-      { name: 'Matemáticas',icon:'superscript', key:8},
-      { name: 'Música',icon:'music', key:9},
-      { name: 'Geografía',icon:'picture-o', key:10},
+      { name: 'La lectura',icon:'language', key:1},
+      { name: 'La materia y la energía', icon:'tree', key:2},
+      { name: 'El ordenador',icon:'desktop', key:3},
+      { name: 'Tipos de deporte',icon:'soccer-ball-o', key:4},
+      { name: 'Dibujo artístico y el color',icon:'paint-brush', key:5},
+      { name: 'Historia de Venezuela',icon:'file-text', key:6},
+      { name: 'La familia en inglés',icon:'comments-o', key:7},      
+      { name: 'Números y operaciones',icon:'superscript', key:8},
+      { name: 'Música tradicional',icon:'music', key:9},
+      { name: 'Tipología climática',icon:'picture-o', key:10},
 
     ])
 
 
     const onCreate = () => {
       console.log('Nuevo contenido.');
-      navigate('PrivateRouter', { screen: 'ContentsRouter' });
+      navigate('ContentsRouter', { screen: 'CreateContents' });
     }
 
-
+    const onPressElement = (event) => {
+      console.log('Detalle del contenido');
+      navigate('ContentsRouter', { screen: 'ContentDetail' });
+    }
     
   return (
     <View>
@@ -59,8 +62,8 @@ const ContentsList = ({ navigation }) => {
             content.map(item => {
               return(
                 <View mt={2} key={item.key} style={{ flex: 1}}>
-                  <VStack mt={5} space={4} w="100%" maxW="400px"  style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
-                    <Pressable paddingLeft={2} style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }}>
+                  <VStack mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+                    <Pressable paddingLeft={2} style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
                       <View style={{ backgroundColor: style.color.primary, height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
                         <Text  style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>
                             <Icon name={item.icon} size={20} color={style.color.secondary} />

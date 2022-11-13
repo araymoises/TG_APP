@@ -17,11 +17,11 @@ const ForgotPassword = () => {
 
   return (
     
-    <ScrollView contentContainerStyle={{  flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: style.color.primary }}>
-      <View style={{ flex: 3, paddingHorizontal: 20, backgroundColor: 'red', width: '100%', backgroundColor: style.color.primary, justifyContent: 'center' }}>
+    <ScrollView contentContainerStyle={{  flexGrow: 1, alignItems: 'center',  justifyContent: 'flex-start', backgroundColor: style.color.primary }}>
+      <View style={{ flex: 3, paddingHorizontal: 20, paddingVertical:20, backgroundColor: 'red', width: '100%', backgroundColor: style.color.primary, justifyContent: 'center' }}>
         <Text style={{ ...style.text.subtitle, color: style.color.secondary }}>Reestablecer contraseña</Text>
       </View>
-      <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+      <View style={{ flex: 1, paddingHorizontal: 20,  paddingVertical:20,justifyContent: 'center', width: '100%', backgroundColor: 'white', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
         <Center>
           <Stack mt={2} space={4} w="100%" maxW="400px">
           <Image

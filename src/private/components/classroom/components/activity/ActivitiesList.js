@@ -25,13 +25,16 @@ const ActivitiesList = ({ navigation }) => {
   // const dispatch = useDispatch();
 
   const onCreate = () => {
-    console.log('Nuevo elemento.');
-    navigate('PrivateRouter', { screen: 'ActivityRouter' });
+    console.log('Nueva aula');
+    navigate('ActivityRouter', { screen: 'CreateActivity' });
   }
   
   const onPressElement = (event) => {
-    console.log('Pesionando elemento.');
+    console.log('Va a la vista de finalizacion de actividad.');
+   // navigate('ActivityRouter', { screen: 'ActivityCompletion' });
     // dispatch(increment());
+
+    navigate('ActivityRouter', { screen: 'ActivityDetailStudent' });
   }
 
   return (
