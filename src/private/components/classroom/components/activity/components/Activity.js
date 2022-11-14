@@ -17,30 +17,35 @@ import {
 } from '@viro-community/react-viro';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPlaneSelected } from './../../../../../../redux/reducers/classroomTitle';
+//import * as objects from './objects/index';
+import * as objects from './objects/index';
+import style from '../../../../../../styles';
 
-const ARActivity = () => {
-   const [text, setText] = useState('Initializing AR...');
+const ARActivity = (props) => {
+  const dispatch = useDispatch();
+  const activity = props.arSceneNavigator.viroAppProps;
+   const [text, setText] = useState('Inicializando Actividad');
    const [questionText, setQuestionText] = useState('');
-   const dispatch = useDispatch();
-
+   const [arePointsDisplayed, setArePointsDisplayed] = useState(true);
    const onInitialized = (state, reason) => {
     console.log('onTrackingUpdated: ', state);
       console.log('guncelleme', state, reason);
       if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
-         setText('Actividad #1');
-         setQuestionText('¿Qué animal es este?')
+         setText(activity.title);
+         setQuestionText(activity.question)
       } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
         dispatch(setPlaneSelected(false))
       }
    }
 
    const planeSelected = () => {
-      console.log('setPlaneSelected(true)');
+      console.log('Panel selected succesfully');
       dispatch(setPlaneSelected(true))
-   }
+      setArePointsDisplayed(false)
+    }
 
    return (
-      <ViroARScene onTrackingUpdated={onInitialized} anchorDetectionTypes={'PlanesHorizontal'} displayPointCloud={true}>
+      <ViroARScene onTrackingUpdated={onInitialized} anchorDetectionTypes={'PlanesHorizontal'} displayPointCloud={arePointsDisplayed}>
           <ViroARPlaneSelector minHeight={0.1} minWidth={0.1} alignment={'Horizontal'} onPlaneSelected={planeSelected}>
             <ViroOrbitCamera position={[0, 0, -0]} focalPoint={[0, 0, -1.15]} />
             <ViroSpotLight 
@@ -104,14 +109,12 @@ const ARActivity = () => {
             /> */}
 
             <Viro3DObject
-               source={require('./objects/falcon/halcon2.obj')}
-               resources={[
-                  require('./objects/falcon/halcon.mtl'),
-               ]}
-               type="OBJ"
-               scale={[0.4, 0.4, 0.4]}
-               position={[0.3, 0, 0]}
-               rotationPivot={[0, 0, 0]}
+               source={objects[activity.object.name].obj}
+               resources={objects[activity.object.name].resources}
+               type={activity.object.type}
+               scale={[parseFloat(activity.object.scale.x), parseFloat(activity.object.scale.y), parseFloat(activity.object.scale.z)]}
+               position={[parseFloat(activity.object.position.x), parseFloat(activity.object.position.y), parseFloat(activity.object.position.z)]}
+               rotationPivot={[parseFloat(activity.object.rotationPivot.x), parseFloat(activity.object.rotationPivot.y), parseFloat(activity.object.rotationPivot.z)]}
                onClick={(position, source) => { console.log('Clickeando al objeto', position); }}
                style={styles.helloWorldTextStyle}
             />
@@ -120,72 +123,110 @@ const ARActivity = () => {
    );
 };
 
-
-
 const Activity = ({ navigation }) => {
    const osVersion = Platform.constants['Release'];
    const navigate = navigation.navigate;
-   const Hub = () => {
-      const isPlaneSelected = useSelector((state) => state.classroomTitle.isPlaneSelected);
-      console.log('isPlaneSelectedisPlaneSelected: ', isPlaneSelected);
-      const onPressOption = (isCorrect, value) => {
-        if (isCorrect) {
-          console.log('¡Respuesta correcta!');
-        } else {
-          console.log('Respuesta incorrecta.');
-        }
-        navigate('ActivityCompletion', {isCorrect, value});
+   const [activity, setActivity] = useState({
+    title: 'Actividad #1',
+    question: '¿Qué animal es éste?',
+    type: {
+      code: 'SIMPLE_SELECTION',
+      name: 'Selección Simple'
+    },
+    answers: [
+      {
+        title: 'Rana',
+        isCorrect: false
+      },
+      {
+        title: 'Caballo',
+        isCorrect: false
+      },
+      {
+        title: 'Halcón',
+        isCorrect: true
+      },
+      {
+        title: 'Perro',
+        isCorrect: false
+      },
+    ],
+    object: {
+      name: 'halcon',
+      sourcePath: './objects/falcon/halcon2.obj',
+      resources: [
+        './objects/falcon/halcon.mtl'
+      ],
+      type: 'OBJ',
+      scale: {
+        x: '0.4',
+        y: '0.4',
+        z: '0.4'
+      },
+      position: {
+        x: '0.3',
+        y: '0',
+        z: '0'
+      },
+      rotationPivot: {
+        x: '0',
+        y: '0',
+        z: '0'
       }
-      return (
-        isPlaneSelected ? (
-          <View style={styles.containerButtons}>
-            <View style={styles.boxButtons}>
-                <TouchableOpacity
-                  key='rana'
-                  onPress={() => onPressOption(false, 'Rana')}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonLabel}> Rana </Text>
-                </TouchableOpacity>
-    
-                <TouchableOpacity
-                  key='caballo'
-                  onPress={() => onPressOption(false, 'Caballo')}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonLabel}> Caballo </Text>
-                </TouchableOpacity>
-    
-                <TouchableOpacity
-                  key='halcon'
-                  onPress={() => onPressOption(true, 'Halcón')}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonLabel}> Halcón </Text>
-                </TouchableOpacity>
-    
-                <TouchableOpacity
-                  key='perro'
-                  onPress={() => onPressOption(false, 'Perro')}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonLabel}> Perro </Text>
-                </TouchableOpacity>
-            </View>
-          </View>
-        ) : (<View></View>)
-      )
-  };
+    }
+   });
+   const isPlaneSelected = useSelector((state) => state.classroomTitle.isPlaneSelected);
+
+   const onPressOption = (isCorrect, value, event) => {
+    console.log(event);
+     if (isCorrect) {
+       console.log('¡Respuesta correcta!');
+     } else {
+       console.log('Respuesta incorrecta.');
+     }
+     // navigate('ActivityCompletion', { isCorrect, value });
+   }
 
    return (
       osVersion >= 8 ? (
          <View style={{ flex: 1, height: '100%' }}>
             <ViroARSceneNavigator
                autofocus={true}
-               initialScene={{ scene: ARActivity }}
+               initialScene={{ scene: ARActivity}}
                style={{ flex: 1 }}
+               viroAppProps={activity}
             />
-            <Hub />
+            {
+              isPlaneSelected ? (
+                <>
+                  <View style={styles.containerButtons}>
+                    <View style={styles.boxButtons}>
+                      {
+                        activity.answers.map(answer => {
+                          return (
+                            <TouchableOpacity
+                              key={answer.title}
+                              onPress={(event) => onPressOption(answer.isCorrect, answer.title, event)}
+                              style={styles.button}
+                            >
+                              <Text style={styles.buttonLabel}> {answer.title} </Text>
+                            </TouchableOpacity>
+                          )
+                        })
+                      }
+                    </View>
+                    <View style={styles.boxButtons}>
+                      <TouchableOpacity
+                        onPress={() => console.log('hola')}
+                        style={styles.finishActivityButtonLabel}
+                      >
+                        <Text style={styles.buttonLabel}> Finalizar Actividad </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </>
+              ) : (<View></View>)
+            }
          </View>
       ) : (
          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -201,13 +242,13 @@ var styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: "flex-end",
       padding: 10,
-      height: '20%',
+      height: '30%',
       backgroundColor: 'transparent',
       bottom: 0
    },
    boxButtons: {
       flex: 1,
-      flexWrap: "wrap",
+      flexWrap: 'wrap',
       marginTop: 8,
       backgroundColor: 'transparent',
       maxHeight: 100,
@@ -219,6 +260,7 @@ var styles = StyleSheet.create({
       color: '#ffffff',
       textAlignVertical: 'center',
       textAlign: 'center',
+      width: 50
    },
    button: {
       paddingHorizontal: 8,
@@ -238,6 +280,19 @@ var styles = StyleSheet.create({
       fontWeight: "500",
       color: "#FFFF",
       textAlign: 'center'
+   },
+   finishActivityButtonLabel: {
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 5,
+    backgroundColor: style.color.primary,
+    alignSelf: "flex-start",
+    marginHorizontal: "1%",
+    marginBottom: 8,
+    minWidth: "48%",
+    textAlign: "center",
+    fontSize: 12,
+    fontWeight: "500"
    },
 });
 
