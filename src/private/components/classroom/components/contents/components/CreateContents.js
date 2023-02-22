@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Input, 
@@ -8,6 +8,9 @@ import {
   TextArea,
   Image,
   ScrollView,
+  Box,
+  Select,
+  CheckIcon,
 
 } from 'native-base';
 
@@ -16,6 +19,7 @@ import style from '~styles';
 
 const CreateContents = () => {
   const selected= require('./images/book.png')
+  let [classroom, setClassroom] = useState("");
 
   return (
     <ScrollView contentContainerStyle={{  flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -32,6 +36,22 @@ const CreateContents = () => {
             />
         <Center>
           <Stack mt={2} space={4} w="100%" maxW="400px">
+          <Box>
+                  <Select selectedValue={classroom}  minWidth="200" accessibilityLabel="Classroom" placeholder="Aula" _selectedItem={{
+                  bg: "info.600",
+                  color: '#404040',
+                  placeholderTextColor: '#404040',
+                  endIcon: <CheckIcon size="5" />,
+                  }}
+                  mt={1} onValueChange={itemValue => setContent(itemValue)}
+                  style={{...style.text.smSelect}}
+                >
+                    <Select.Item label="Selección múltiple" value="1" />
+                    <Select.Item label="Selección simple" value="2" />
+                    <Select.Item label="Ordene la palabra" value="3" />
+                    <Select.Item label="Verdadero y falso" value="4" />
+                  </Select>
+            </Box>
             <Input size="lg" variant="underlined" placeholder="Título" />
             <TextArea size="lg" variant="underlined" placeholder="Contenido"/>
             <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Guardar</Button>
