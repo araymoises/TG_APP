@@ -5,9 +5,11 @@ import {
   View,
   ScrollView,
   Divider,
+  Button,
 } from 'native-base';
 import style from '~styles';
 import randomColor from '../../../../services/colorNames';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
   LineChart,
@@ -15,7 +17,8 @@ import {
   PieChart,
 } from "react-native-chart-kit";
 
-const ClassroomDetail = () => {
+const ClassroomDetail = ({ navigation }) => {
+  const navigate = navigation.navigate;
   const chartConfig = {
     backgroundColor: "#00326F",
     backgroundGradientFrom: "#00326F",
@@ -88,7 +91,13 @@ const ClassroomDetail = () => {
 
   const screenWidth = Dimensions.get("window").width - 50;
 
+  const onEdit = () => {
+    console.log('edit aula');
+    navigate('ClassroomAdminRouter', { screen: 'EditClassroom' });
+  }
+
   return (
+    <View style={{ flex: 1 }} >
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', paddingVertical:20 }}>
       <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
         <View style={{ backgroundColor: randomColor(), height: 150, width: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 74, elevation: 10 }}>
@@ -172,6 +181,8 @@ const ClassroomDetail = () => {
         />
       </View>
     </ScrollView>
+      <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="edit" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onEdit}>Editar Aula</Button>
+    </View>
   );
 };
 
