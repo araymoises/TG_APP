@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   Text,
   View,
@@ -10,16 +10,27 @@ import {
   Pressable,
   Image,
   ScrollView,
+  Alert,
+  VStack,
+  HStack,
+  IconButton,
+  CloseIcon
 } from 'native-base';
 import style from '~styles';
   
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Login = ({ navigation}) => {
-
-  const [showPassword, setShowPassword] = React.useState(false);
+const Login = ({ navigation, route}) => {
+  const { message } = route.params || { message: '' };
+  console.log(message);
   const navigate = navigation.navigate;
   const selected= require('./images/login.png')
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [userInfo, setUserInfo] = useState({
+    email:'',
+    password:''
+
+  })
 
 
   const togglePassword = () => setShowPassword(!showPassword);
@@ -59,10 +70,29 @@ const Login = ({ navigation}) => {
             />
       </View>
       <View style={{ flex: 3, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}}>
-          
+        {message ?        
+            <Alert maxW="400" status="success" colorScheme="success">
+              <VStack space={2} flexShrink={1} w="100%">
+                <HStack flexShrink={1} space={2} alignItems="center" justifyContent="space-between">
+                  <HStack flexShrink={1} space={2} alignItems="center">
+                    <Alert.Icon />
+                    <Text fontSize="md" fontWeight="medium" color="coolGray.800">
+                      {message}
+                    </Text>
+                  </HStack>
+                </HStack>
+                <Box pl="6" _text={{
+                color: "coolGray.600"
+              }}>
+                  Por favor inicie sesión.
+                </Box>
+              </VStack>
+            </Alert>
+          :null
+          }
         <Center>
           <Stack space={4} w="100%" maxW="400px">
-            <Input size="lg" variant="underlined" placeholder="Email" />
+            <Input size="lg" variant="underlined" placeholder="Email" autoCapitalize='none'/>
             <Box>
               <Input type={showPassword ? "text" : "password"} size="lg" variant="underlined" 
                 InputRightElement={
@@ -70,7 +100,7 @@ const Login = ({ navigation}) => {
                     {showPassword ? <Icon name="eye-slash" size={20} color={style.color.primary}/> : <Icon name="eye" size={20} color={style.color.primary}/>}
                   </Button>
                 } 
-                placeholder="Contraseña" />
+                placeholder="Contraseña"/>
             </Box>
           <Pressable onPress={(event) => onForgotPassword(event)}>
             <Text style={{ ...style.text.xs, textAlign: 'right', color: style.color.primary, fontWeight: 'bold' }}>¿Olvidaste tu contraseña?</Text>

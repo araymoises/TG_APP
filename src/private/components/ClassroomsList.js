@@ -59,13 +59,12 @@ const Classrooms = ({ navigation }) => {
               <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
                 <View style={{ flex: 1, marginLeft: 5 }}>
                   <View style={{ backgroundColor: style.color.primary, height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
-                    {/* <Icon name="graduation-cap" size={40} color="#F6F6F6" /> */}
                     <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>{classroom.name}</Text>
                   </View>
                 </View>
                 <View style={{ flex: 5, paddingLeft: 10 }}>
                   <Text mt={2} style={{ ...style.text.md, fontWeight: 'bold' }}>{classroom.description}</Text>
-                  <Text mt={2} style={{ ...style.text.sm }}>Cantidad de alumnos: 11</Text>
+                  <Text mt={2} style={{ ...style.text.sm }}>Cantidad de alumnos: {classroom.studentsQuantity}</Text>
                   <Text mt={2} style={{ ...style.text.sm }}>Progreso: 42%</Text>
                 </View>
               </Pressable>

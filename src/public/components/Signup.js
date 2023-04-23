@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState}  from 'react';
 import {
   Text,
   View,
@@ -13,21 +13,69 @@ import {
 } from 'native-base';
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {signup } from "./../../../api";
+import {login } from "./../../../api";
 
+const isValidObjField = (obj) =>{
+ return Object.values(obj).every(value => value.trim())
+}
+
+const updateError = (error, stateUpdater) => {
+  stateUpdater(error);
+
+  setTimeout(() => {
+    stateUpdater('')
+  }, 1000);
+}
+
+const isValidEmail = (value) =>{
+  const regx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regx.test(value)
+}
 const Signup = ({ navigation}) => {
-
+  const selected= require('./images/register.png')
   const navigate = navigation.navigate;
   const [showPassword, setShowPassword] = React.useState(false);
+  const [userInfo, setUserInfo] = useState({
+    firstname:'',
+		lastname:'',
+    email:'',
+    password:''
 
+  })
+
+  const {firstname,lastname,email,password} = userInfo;
+  const [error, setError] = useState('');
   const togglePassword = () => setShowPassword(!showPassword);
 
-  const selected= require('./images/register.png')
+ const handleOnChangeText = (value, fieldName)=>{setUserInfo({...userInfo, [fieldName]:value})}
+  const isValidForm = () =>{
+    //que solo acepte si todos los campos tienen valores
+    if(!isValidObjField(userInfo)) return updateError('Debe llenar todos los campos', setError)
 
+    if(!firstname.trim() || firstname.length < 3) return updateError('El nombre debe ser mayor a 3 letras', setError)
 
-  const onSignup= () => {
-    console.log('Ir al register');
-    navigate('PublicRouter', { screen: 'Signup' });
+    if(!lastname.trim() || lastname.length < 3) return updateError('El apellido debe ser mayor a 3 letras', setError)
+
+    if(!isValidEmail(email)) return updateError('Email invalido', setError)
+
+    if(!password.trim() || password.length < 8) return updateError('La contraseña debe tener más de 8 caracteres', setError)
+
+    return true;
   }
+  const onSignup = () => {
+    if(isValidForm()) {
+        signup(userInfo).then(() => {
+          navigate('PublicRouter', { 
+            screen: 'Login',
+            params: { message: '¡Usuario creado con éxito!' }
+          });
+        }).catch(error => {
+          updateError(error.response.data.message, setError);
+        });
+    
+    }
+  };
 
 
   return (
@@ -50,11 +98,12 @@ const Signup = ({ navigation}) => {
               />
         </View>
         <View style={{ flex: 4, paddingHorizontal: 20, paddingBottom:20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}}>
+          {error ? <Text style={{color:'red', fontSize:18, textAlign:'center'}}>{error}</Text>:null}
           <Center>
             <Stack mt={2} space={4} w="100%" maxW="400px">
-              <Input size="lg" variant="underlined" placeholder="Nombre" />
-              <Input size="lg" variant="underlined" placeholder="Apellido" />
-              <Input size="lg" variant="underlined" placeholder="Email" />
+              <Input size="lg" variant="underlined" placeholder="Nombre"  value={firstname} onChangeText={ (value) => handleOnChangeText(value, 'firstname') }/>
+              <Input size="lg" variant="underlined" placeholder="Apellido"  value={lastname} onChangeText={ (value) => handleOnChangeText(value, 'lastname') }/>
+              <Input size="lg" variant="underlined" placeholder="Email" autoCapitalize='none' value={email} onChangeText={ (value) => handleOnChangeText(value, 'email') }/>
               <Box>
                 <Input type={showPassword ? "text" : "password"} size="lg" variant="underlined" 
                   InputRightElement={
@@ -62,7 +111,10 @@ const Signup = ({ navigation}) => {
                                           {showPassword ? <Icon name="eye-slash" size={20} color={style.color.primary}/> : <Icon name="eye" size={20} color={style.color.primary}/>}
                     </Button>
                   } 
-                  placeholder="Contraseña" />
+                  placeholder="Contraseña" 
+                  value={password}
+                   onChangeText={ (value) => handleOnChangeText(value, 'password') }
+                   />
               </Box>
             <Button style={{ ...style.button.primary}} _text={{ color: style.color.secondary }} onPress={onSignup}>Registrarse</Button>
             </Stack>
