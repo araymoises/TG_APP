@@ -19,26 +19,28 @@ import {
 import style from '~styles';
   
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { login } from "../../../api";
+import {isValidObjField,isValidEmail,updateError } from "./validations/Validations";
+
 
 const Login = ({ navigation, route}) => {
-  const { message } = route.params || { message: '' };
-  console.log(message);
   const navigate = navigation.navigate;
-  const selected= require('./images/login.png')
-  const [showPassword, setShowPassword] = React.useState(false);
+  const selected= require('./images/login.png');
+
+  const { message } = route.params || { message: '' };
+  const [showPassword, setShowPassword] = useState(false);
+  
   const [userInfo, setUserInfo] = useState({
     email:'',
     password:''
 
   })
 
+  const {email,password} = userInfo;
+  const [error, setError] = useState('');
+
 
   const togglePassword = () => setShowPassword(!showPassword);
-  
-  const onLogin = () => {
-    console.log('Ir al home');
-    navigate('PrivateRouter', { screen: 'Home' });
-  }
 
   const onSignup= () => {
     console.log('Ir al register');
@@ -50,6 +52,36 @@ const Login = ({ navigation, route}) => {
     navigate('PublicRouter', { screen: 'ForgotPassword' });
   }
 
+  const handleOnChangeText = (value, fieldName)=>{setUserInfo({...userInfo, [fieldName]:value})}
+  const isValidForm = () =>{
+    if(!isValidObjField(userInfo)) return updateError('Debe llenar todos los campos', setError)
+    if(!isValidEmail(email)) return updateError('Email invalido', setError)
+
+    if(!password.trim() || password.length < 8) return updateError('La contraseña debe tener más de 8 caracteres', setError)
+
+    return true;
+  }
+
+  const onLogin = async () =>
+  {
+    if(isValidForm())
+    {
+      try {
+        const response = await login(userInfo);
+        if(response.success){
+          setUserInfo({email:'',password:''});
+          navigate('PrivateRouter', { screen: 'Home' });
+  
+        }
+        
+      } catch (error) {
+        updateError(error.response.data.message, setError);
+      }
+
+
+    }
+
+  }
 
 
   return (
@@ -69,7 +101,7 @@ const Login = ({ navigation, route}) => {
             my="auto"
             />
       </View>
-      <View style={{ flex: 3, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}}>
+      <View style={{ flex: 3, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}} id="alert-register">
         {message ?        
             <Alert maxW="400" status="success" colorScheme="success">
               <VStack space={2} flexShrink={1} w="100%">
@@ -91,8 +123,9 @@ const Login = ({ navigation, route}) => {
           :null
           }
         <Center>
+        {error ? <Text style={{color:'red', fontSize:18, textAlign:'center'}}>{error}</Text>:null}
           <Stack space={4} w="100%" maxW="400px">
-            <Input size="lg" variant="underlined" placeholder="Email" autoCapitalize='none'/>
+            <Input size="lg" variant="underlined" placeholder="Email" autoCapitalize='none' value={email} onChangeText={ (value) => handleOnChangeText(value, 'email') }/>
             <Box>
               <Input type={showPassword ? "text" : "password"} size="lg" variant="underlined" 
                 InputRightElement={
@@ -100,7 +133,10 @@ const Login = ({ navigation, route}) => {
                     {showPassword ? <Icon name="eye-slash" size={20} color={style.color.primary}/> : <Icon name="eye" size={20} color={style.color.primary}/>}
                   </Button>
                 } 
-                placeholder="Contraseña"/>
+                placeholder="Contraseña"
+                value={password}
+                onChangeText={ (value) => handleOnChangeText(value, 'password') }
+                />
             </Box>
           <Pressable onPress={(event) => onForgotPassword(event)}>
             <Text style={{ ...style.text.xs, textAlign: 'right', color: style.color.primary, fontWeight: 'bold' }}>¿Olvidaste tu contraseña?</Text>

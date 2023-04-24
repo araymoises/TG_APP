@@ -14,24 +14,8 @@ import {
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {signup } from "./../../../api";
-import {login } from "./../../../api";
+import {isValidObjField,isValidEmail,updateError } from "./validations/Validations";
 
-const isValidObjField = (obj) =>{
- return Object.values(obj).every(value => value.trim())
-}
-
-const updateError = (error, stateUpdater) => {
-  stateUpdater(error);
-
-  setTimeout(() => {
-    stateUpdater('')
-  }, 1000);
-}
-
-const isValidEmail = (value) =>{
-  const regx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return regx.test(value)
-}
 const Signup = ({ navigation}) => {
   const selected= require('./images/register.png')
   const navigate = navigation.navigate;
@@ -65,11 +49,15 @@ const Signup = ({ navigation}) => {
   }
   const onSignup = () => {
     if(isValidForm()) {
-        signup(userInfo).then(() => {
-          navigate('PublicRouter', { 
-            screen: 'Login',
-            params: { message: '¡Usuario creado con éxito!' }
-          });
+        signup(userInfo).then((response) => {
+          if(response.success)
+          {
+            setUserInfo({firstname:'',lastname:'',email:'',password:''});
+            navigate('PublicRouter', { 
+              screen: 'Login',
+              params: { message: '¡Usuario creado con éxito!' }
+            });
+          }
         }).catch(error => {
           updateError(error.response.data.message, setError);
         });

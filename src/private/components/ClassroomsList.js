@@ -10,6 +10,11 @@ import {
   Box,
   ScrollView,
   Pressable,
+  Alert,
+  HStack,
+  IconButton,
+  CloseIcon,
+  Image,
 } from 'native-base';
 import style from '~styles';
 
@@ -17,13 +22,14 @@ import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import {getClassrooms  } from "./../../../api";
-
+import { updateError  } from "../validations/Validations";
+import AlertError from './AlertError';
 
 const Classrooms = ({ navigation }) => {
   const navigate = navigation.navigate;
-  const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0M2ZkZDRjY2M1ZmRmMDM5Y2U4YzM2OCIsIm5hbWUiOiJDcmlzbGVpdnlzIEdpbCIsInRlYWNoZXIiOnsiX2lkIjoiNjQzZmRkNGJjYzVmZGYwMzljZThjMzY3IiwiZmlyc3RuYW1lIjoiQ3Jpc2xlaXZ5cyIsImxhc3RuYW1lIjoiR2lsIiwiZW1haWwiOiJjcmlzbGVpdnlzbmdpbEBnbWFpbC5jb20iLCJwaG9uZSI6IjA0MjYyMjkxOTUxIiwiX192IjowLCJpZCI6IjY0M2ZkZDRiY2M1ZmRmMDM5Y2U4YzM2NyJ9LCJlbWFpbCI6ImNyaXNsZWl2eXNuZ2lsQGdtYWlsLmNvbSIsImNyZWF0ZWQiOiIyMDIzLTA0LTE5VDEyOjIzOjQwLjAxMloiLCJtb2RpZmllZCI6IjIwMjMtMDQtMTlUMTI6MjM6NDAuMDEyWiIsIl9fdiI6MCwiaWQiOiI2NDNmZGQ0Y2NjNWZkZjAzOWNlOGMzNjgifSwiaWF0IjoxNjgyMDg5MjczLCJleHAiOjE2ODIxNzU2NzN9.2ET9cbpPQknoybQOuFZmKjV_wvpb_UR3fzJhidcz6GA"
-
+  const selected= require('./images/error.png')
   const [classrooms, setClassrooms] = useState([]);
+  const [message,setMessage]= useState('');
   const onCreate = () => {
     console.log('Nuevo aula');
     navigate('ClassroomAdminRouter', { screen: 'CreateClassroom' });
@@ -36,8 +42,15 @@ const Classrooms = ({ navigation }) => {
   }
 
   const loadClassrooms = async() =>{
-    const res = await getClassrooms();
-    setClassrooms(res.data.content);
+    try {
+      const res = await getClassrooms();
+      console.log(res);
+      setClassrooms(res.data.content);
+      
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
+
   }
 
   useEffect(() => {
@@ -53,6 +66,11 @@ const Classrooms = ({ navigation }) => {
         alignItems: 'center', 
         justifyContent: 'flex-start'
       }}>
+        {message ?
+          <AlertError error={message}/>
+        :null
+        }
+
          {classrooms.map((classroom, item) => (
           <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>
           
