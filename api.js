@@ -17,32 +17,15 @@ export const signup = (userInfo) => {
 };
 
   export const login = async (userInfo) => {
-    try {
-      const response = await axios.post(API+'/auth/login', userInfo);
-      if(response.data.success){
-        const token=response.data.content.token;
-        await AsyncStorage.setItem('token',token);
-      }
+      return axios.post(API+'/auth/login', userInfo);
       
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
   };
 
 
 export const getClassrooms = async () => {
   const token = await getToken();
-  try {
-    const response = await axios.get(API + '/classrooms', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
+  return axios.get(API + '/classrooms', {headers: {'Authorization': `Bearer ${token}`}
     });
-    return response;
-  } catch (error) {
-    throw error;
-  }
 }
   
 

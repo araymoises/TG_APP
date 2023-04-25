@@ -43,13 +43,22 @@ const Classrooms = ({ navigation,route }) => {
     // navigation.navigate('PublicRouter', { screen: 'Login' });
   }
 
-  const loadClassrooms = async () => {
-    try {
-      const res = await getClassrooms();
-      setClassrooms(res.data.content);
-    } catch (error) {
-      setMessage(error.response.data);
-    }
+  const loadClassrooms = () => {
+    getClassrooms()
+      .then((res) => {
+        setClassrooms(res.data.content);
+      })
+      .catch((error) => {
+        console.log('Hola');
+        console.log(error.response);
+        if(error.response){
+          setMessage(error.response.data.message);
+        }
+        else{
+          setMessage('Ha ocurrido un error interno');
+        }
+        
+      });
   }
 
   useEffect(() => {

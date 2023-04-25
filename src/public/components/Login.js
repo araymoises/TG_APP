@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   Text,
   View,
@@ -20,6 +20,7 @@ import style from '~styles';
   
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { login } from "../../../api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {isValidObjField,isValidEmail,updateError } from "../../validations/Validations";
 
 
@@ -29,7 +30,7 @@ const Login = ({ navigation, route}) => {
 
   const { message } = route.params || { message: '' };
   const [showPassword, setShowPassword] = useState(false);
-  
+  const [showAlert, setShowAlert] = useState(true);
   const [userInfo, setUserInfo] = useState({
     email:'',
     password:''
@@ -66,23 +67,40 @@ const Login = ({ navigation, route}) => {
   {
     if(isValidForm())
     {
-      try {
-        const response = await login(userInfo);
-        if(response.success){
+      login(userInfo)
+      .then(async (res) => {
+        console.log(res.data)
+        if(res.data.success)
+        {
+          const token=res.data.content.token;
+          await AsyncStorage.setItem('token',token);
           setUserInfo({email:'',password:''});
           navigate('PrivateRouter', { screen: 'Home' });
   
         }
+      })
+      .catch((error) => {
+        if(error.response){
+          updateError(error.response.data.message, setError);
+        }
+        else{
+          console.log(error)
+          updateError('Ha ocurrido un error interno', setError);
+        }
         
-      } catch (error) {
-        console.log('Hola error: '+error)
-        updateError(error.response.data.message, setError);
-      }
-
+      });
 
     }
 
   }
+
+  useEffect(() => {
+    const hideAlert = setTimeout(() => {
+      setShowAlert(false);
+    }, 5000);
+
+    return () => clearTimeout(hideAlert);
+  }, []);
 
 
   return (
