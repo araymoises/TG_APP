@@ -14,7 +14,7 @@ import {
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {signup } from "./../../../api";
-import {isValidObjField,isValidEmail,updateError } from "./validations/Validations";
+import {isValidObjField,isValidEmail,updateError } from "../../validations/Validations";
 
 const Signup = ({ navigation}) => {
   const selected= require('./images/register.png')
@@ -50,7 +50,7 @@ const Signup = ({ navigation}) => {
   const onSignup = () => {
     if(isValidForm()) {
         signup(userInfo).then((response) => {
-          if(response.success)
+          if(response.data.success)
           {
             setUserInfo({firstname:'',lastname:'',email:'',password:''});
             navigate('PublicRouter', { 
@@ -59,7 +59,14 @@ const Signup = ({ navigation}) => {
             });
           }
         }).catch(error => {
-          updateError(error.response.data.message, setError);
+          if(error.response)
+          {
+            updateError(error.response.data.message, setError);
+          }
+          else{
+            console.log(error);
+            updateError('Ocurrio un error interno.', setError);
+          }
         });
     
     }

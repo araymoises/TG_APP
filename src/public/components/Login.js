@@ -20,7 +20,7 @@ import style from '~styles';
   
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { login } from "../../../api";
-import {isValidObjField,isValidEmail,updateError } from "./validations/Validations";
+import {isValidObjField,isValidEmail,updateError } from "../../validations/Validations";
 
 
 const Login = ({ navigation, route}) => {
@@ -75,6 +75,7 @@ const Login = ({ navigation, route}) => {
         }
         
       } catch (error) {
+        console.log('Hola error: '+error)
         updateError(error.response.data.message, setError);
       }
 

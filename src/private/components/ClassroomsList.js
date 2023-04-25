@@ -24,12 +24,14 @@ import axios from 'axios';
 import {getClassrooms  } from "./../../../api";
 import { updateError  } from "../validations/Validations";
 import AlertError from './AlertError';
+import AlertSuccess from './AlertSuccess';
 
-const Classrooms = ({ navigation }) => {
+const Classrooms = ({ navigation,route }) => {
   const navigate = navigation.navigate;
-  const selected= require('./images/error.png')
   const [classrooms, setClassrooms] = useState([]);
   const [message,setMessage]= useState('');
+  const messageSuccess = route.params?.messageSuccess || ''
+  
   const onCreate = () => {
     console.log('Nuevo aula');
     navigate('ClassroomAdminRouter', { screen: 'CreateClassroom' });
@@ -41,16 +43,13 @@ const Classrooms = ({ navigation }) => {
     // navigation.navigate('PublicRouter', { screen: 'Login' });
   }
 
-  const loadClassrooms = async() =>{
+  const loadClassrooms = async () => {
     try {
       const res = await getClassrooms();
-      console.log(res);
       setClassrooms(res.data.content);
-      
     } catch (error) {
-      setMessage(error.response.data.message);
+      setMessage(error.response.data);
     }
-
   }
 
   useEffect(() => {
@@ -68,6 +67,11 @@ const Classrooms = ({ navigation }) => {
       }}>
         {message ?
           <AlertError error={message}/>
+        :null
+        }
+
+        {messageSuccess ?
+          <AlertSuccess success={messageSuccess}/>
         :null
         }
 

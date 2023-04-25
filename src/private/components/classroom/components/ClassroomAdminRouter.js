@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setClassroomTitle } from '../../../../redux/reducers/classroomTitle';
 import CreateClassroom from './CreateClassroom';
 import EditClassroom from './EditClassroom';
-
+import ClassroomsList from '../../ClassroomsList'
 const ClassroomAdminRouter = () => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
@@ -18,6 +18,10 @@ const ClassroomAdminRouter = () => {
       />
       <Stack.Screen name="EditClassroom" component={EditClassroom}
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Editar Aula'))} })} 
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="ClassroomsList" component={ClassroomsList}
+        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Aulas'))} })} 
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

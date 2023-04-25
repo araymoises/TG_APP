@@ -14,30 +14,54 @@ import {
   Text,
 } from 'native-base';
 import style from '~styles';
+import { saveClassrooms } from "./../../../../../api";
+import {isValidObjField,updateError } from "../../../../validations/Validations";
 
-const CreateClassroom = () => {
-
+const CreateClassroom = ({navigation}) => {
   const selected= require('./images/classroom.png')
+  const navigate = navigation.navigate;
+  const [classroom, setClassroom] = useState({
+    name:'',
+    description:''
 
-  let [content, setContent] = useState("");
+  })
 
-  let [activity, setActivity] = useState("");
-  const [dateStart, setDateStart] = useState(new Date());
-  const [dateEnd, setDateEnd] = useState(new Date());
-  const [anwser, setAnswer] = useState("");
-  const [object, setObject] = useState([
-    { name: 'Accesorio de iluminación', key:1},
-    { name: 'Agenda', key:2},
-    { name: 'Águila', key:3},
-    { name: 'Araña', key:4},
-    { name: 'Árbol de navidad', key:5},
-    { name: 'Armadillo', key:6},
-    { name: 'Audífonos', key:7},      
-    { name: 'Avión Militar', key:8},
-    { name: 'Bombillo', key:9},
-    { name: 'Borrador', key:10},
+  const {name,description} = classroom;
+  const [error, setError] = useState('');
 
-  ])
+  const handleOnChangeText = (value, fieldName)=>{setClassroom({...classroom, [fieldName]:value})}
+  const isValidForm = () =>{
+    if(!isValidObjField(classroom)) return updateError('Debe llenar todos los campos', setError)
+    if(!name.trim() || name.length > 3) return updateError('El nombre debe tener menos de 3 letras', setError)
+    if(!description.trim() || description.length < 8) return updateError('La descripción debe tener más de 8 letras', setError)
+
+    return true;
+  }
+
+  const onSaveClassroom = () =>
+  {
+    console.log('entre a onSaveClassroom')
+      if(isValidForm())
+    {
+      saveClassrooms(classroom)
+      .then((res) => {
+        console.log('Res:')
+        console.log(res.data.message)
+        setClassroom({name:'',description:''});
+        navigate('ClassroomAdminRouter', { screen: 'ClassroomsList',
+        params: { messageSuccess: `${res.data.message}` }
+        });
+      })
+      .catch((error) => {
+        console.log('Hola');
+        console.log(error);
+        //updateError(error.res.data.message, setError);
+      });
+
+
+    }
+
+  }
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -54,10 +78,17 @@ const CreateClassroom = () => {
             />
         
         <Center>
+        {error ? <Text style={{color:'red', fontSize:18, textAlign:'center'}}>{error}</Text>:null}
           <Stack mt={2} space={4} w="100%" maxW="400px">
-            <Input size="lg" variant="underlined" placeholder="Nombre del Aula" />
-            <Input size="lg" variant="underlined" placeholder="Descripción del Aula" />
-            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Crear</Button>
+            <Input size="lg" variant="underlined" placeholder="1 A"
+            value={name}
+            onChangeText={ (value) => handleOnChangeText(value, 'name') }
+            />
+            <Input size="lg" variant="underlined" placeholder="Descripción del Aula"
+             value={description}
+             onChangeText={ (value) => handleOnChangeText(value, 'description') }
+            />
+            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} onPress={onSaveClassroom}>Crear</Button>
           </Stack>
         </Center>
       </View>
