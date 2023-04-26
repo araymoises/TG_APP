@@ -69,7 +69,7 @@ const Login = ({ navigation, route}) => {
     {
       login(userInfo)
       .then(async (res) => {
-        console.log(res.data)
+        //console.log(res.data)
         if(res.data.success)
         {
           const token=res.data.content.token;

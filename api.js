@@ -38,3 +38,8 @@ export const saveClassrooms = async(classroom) =>{
   return axios.post(API+'/classrooms/save', classroom,{headers: {'Authorization': `Bearer ${token}`}});
 
 }
+
+export const getClassroom = async (classroom) => {
+  const token = await getToken();
+  return axios.get(API + '/classrooms/'+ classroom, {headers: {'Authorization': `Bearer ${token}`}});
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import {
   Text,
@@ -16,9 +16,14 @@ import {
   BarChart,
   PieChart,
 } from "react-native-chart-kit";
+import {getClassroom  } from "../../../../../api";
+import AlertError from '../../AlertError';
 
-const ClassroomDetail = ({ navigation }) => {
+const ClassroomDetail = ({ navigation,route }) => {
   const navigate = navigation.navigate;
+  const  id  = route.params?.id || '';
+  const [classroom, setClassroom] = useState([]);
+  const [message,setMessage]= useState('');
   const chartConfig = {
     backgroundColor: "#00326F",
     backgroundGradientFrom: "#00326F",
@@ -96,20 +101,43 @@ const ClassroomDetail = ({ navigation }) => {
     navigate('ClassroomAdminRouter', { screen: 'EditClassroom' });
   }
 
+
+  const loadClassroom = (id) => {
+    getClassroom(id)
+      .then((res) => {
+        setClassroom(res.data.content);
+      })
+      .catch((error) => {
+        console.log(error);
+        if(error.response){
+          setMessage(error.response.data.message);
+        }
+        else{
+          setMessage('Ha ocurrido un error interno');
+        }
+        
+      });
+  }
+
+  useEffect(() => {
+    loadClassroom(id)
+  }, [id])
+
   return (
     <View style={{ flex: 1 }} >
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', paddingVertical:20 }}>
+      {message ? <Text style={{color:'red', fontSize:18, textAlign:'center'}}>{message}</Text>:null}
       <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
         <View style={{ backgroundColor: randomColor(), height: 150, width: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 74, elevation: 10 }}>
           {/* <Icon name="graduation-cap" size={40} color="#F6F6F6" /> */}
-          <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>1º A</Text>
+          <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>{classroom.name}</Text>
           {/* <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>{ randomColor() }</Text> */}
         </View>
       </View>
 
       <View style={{ flex: 2, width: '100%', padding: 20 }}>
-        <Text mt={2} style={{ ...style.text.subtitle}}>U.E Doctor José Antonio Abreu</Text>
-        <Text mt={2} style={{ ...style.text.md, fontWeight: 'bold'}}>1º A</Text>
+        <Text mt={2} style={{ ...style.text.subtitle}}>{classroom.description}</Text>
+        <Text mt={2} style={{ ...style.text.md, fontWeight: 'bold'}}>{classroom.name}</Text>
         <Divider my={1} />
       </View>
 

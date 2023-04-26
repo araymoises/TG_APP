@@ -33,14 +33,11 @@ const Classrooms = ({ navigation,route }) => {
   const messageSuccess = route.params?.messageSuccess || ''
   
   const onCreate = () => {
-    console.log('Nuevo aula');
     navigate('ClassroomAdminRouter', { screen: 'CreateClassroom' });
   }
   
-  const onPressElement = (event) => {
-    console.log('Pesionando elemento.');
-    navigate('ClassroomRouter');
-    // navigation.navigate('PublicRouter', { screen: 'Login' });
+  const onPressElement = (classroom) => {
+    navigate('ClassroomRouter',{ screen: 'ClassroomDetail', params: { id: classroom._id}});
   }
 
   const loadClassrooms = () => {
@@ -49,8 +46,7 @@ const Classrooms = ({ navigation,route }) => {
         setClassrooms(res.data.content);
       })
       .catch((error) => {
-        console.log('Hola');
-        console.log(error.response);
+        console.log(error);
         if(error.response){
           setMessage(error.response.data.message);
         }
@@ -87,7 +83,7 @@ const Classrooms = ({ navigation,route }) => {
          {classrooms.map((classroom, item) => (
           <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>
           
-              <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
+              <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={() => onPressElement(classroom)}>
                 <View style={{ flex: 1, marginLeft: 5 }}>
                   <View style={{ backgroundColor: style.color.primary, height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
                     <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>{classroom.name}</Text>
