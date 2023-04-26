@@ -22,6 +22,7 @@ import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import {getClassrooms  } from "./../../../api";
+import {getUserData  } from "./../../../api";
 import { updateError  } from "../validations/Validations";
 import AlertError from './AlertError';
 import AlertSuccess from './AlertSuccess';
@@ -30,7 +31,8 @@ const Classrooms = ({ navigation,route }) => {
   const navigate = navigation.navigate;
   const [classrooms, setClassrooms] = useState([]);
   const [message,setMessage]= useState('');
-  const messageSuccess = route.params?.messageSuccess || ''
+  const messageSuccess = route.params?.messageSuccess || '';
+  const [isTeacher,setIsTeacher] = useState(false);
   
   const onCreate = () => {
     navigate('ClassroomAdminRouter', { screen: 'CreateClassroom' });
@@ -59,6 +61,18 @@ const Classrooms = ({ navigation,route }) => {
 
   useEffect(() => {
     loadClassrooms()
+  }, [])
+
+  const getUser = async()=>{
+    const user =  await getUserData();
+    if(user.teacher)
+    {
+      setIsTeacher(true);
+    }
+
+  }
+  useEffect(() => {
+    getUser()
   }, [])
   
   return (
@@ -100,8 +114,10 @@ const Classrooms = ({ navigation,route }) => {
        ))}
 
       </ScrollView>
-   
-      <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="plus" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onCreate}>Nueva Aula</Button>
+      {isTeacher &&
+        (<Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="plus" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onCreate}>Nueva Aula</Button>)
+          
+      }
     </View>
   );
 };

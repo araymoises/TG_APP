@@ -12,6 +12,18 @@ export const getToken = async () => {
     throw error;
   }
 }
+
+export const getUserData = async () => {
+  try {
+    const userData = await AsyncStorage.getItem('userData')
+    if(userData !== null) {
+      return JSON.parse(userData);
+    }
+  } catch(e) {
+    throw error;
+  }
+}
+
 export const signupTeacher = (teacherInfo) => {
     return axios.post(API+'/auth/teachers/signup', teacherInfo)
 };

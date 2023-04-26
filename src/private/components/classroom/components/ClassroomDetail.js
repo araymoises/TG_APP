@@ -17,6 +17,7 @@ import {
   PieChart,
 } from "react-native-chart-kit";
 import {getClassroom  } from "../../../../../api";
+import {getUserData  } from "../../../../../api";
 import AlertError from '../../AlertError';
 
 const ClassroomDetail = ({ navigation,route }) => {
@@ -24,6 +25,7 @@ const ClassroomDetail = ({ navigation,route }) => {
   const  id  = route.params?.id || '';
   const [classroom, setClassroom] = useState([]);
   const [message,setMessage]= useState('');
+  const [isTeacher,setIsTeacher] = useState(false);
   const chartConfig = {
     backgroundColor: "#00326F",
     backgroundGradientFrom: "#00326F",
@@ -123,6 +125,18 @@ const ClassroomDetail = ({ navigation,route }) => {
     loadClassroom(id)
   }, [id])
 
+  const getUser = async()=>{
+    const user =  await getUserData();
+    if(user.teacher)
+    {
+      setIsTeacher(true);
+    }
+
+  }
+  useEffect(() => {
+    getUser()
+  }, [])
+
   return (
     <View style={{ flex: 1 }} >
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', paddingVertical:20 }}>
@@ -209,8 +223,12 @@ const ClassroomDetail = ({ navigation,route }) => {
         />
       </View>
     </ScrollView>
+    {isTeacher &&
+        (
       <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="edit" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onEdit}>Editar Aula</Button>
-    </View>
+      )
+    }
+      </View>
   );
 };
 

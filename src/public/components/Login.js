@@ -74,6 +74,7 @@ const Login = ({ navigation, route}) => {
         {
           const token=res.data.content.token;
           await AsyncStorage.setItem('token',token);
+          await AsyncStorage.setItem('userData', JSON.stringify(res.data.content.user));
           setUserInfo({email:'',password:''});
           navigate('PrivateRouter', { screen: 'Home' });
   
