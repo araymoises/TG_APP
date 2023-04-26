@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import ClassroomDetail from './components/ClassroomDetail';
@@ -8,12 +8,25 @@ import style from '~styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { setClassroomTitle } from './../../../redux/reducers/classroomTitle';
 import ContentsList from './components/contents/ContentsList';
-
+import {getUserData  } from "./../../../../api";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const PrivateRouter = () => {
   const Tab = createMaterialTopTabNavigator();
   const dispatch = useDispatch();
+  const [isTeacher,setIsTeacher] = useState(false);
+
+  const getUser = async()=>{
+    const user =  await getUserData();
+    if(user.teacher)
+    {
+      setIsTeacher(true);
+    }
+
+  }
+  useEffect(() => {
+    getUser()
+  }, [])
 
   return (
     <Tab.Navigator initialRouteName="ClassroomDetail" tabBarPosition='bottom' tabBarStyle={{ height:100 }} backBehavior='history'
@@ -30,12 +43,14 @@ const PrivateRouter = () => {
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Información del aula'))} })} 
         component={ClassroomDetail} 
         options={{ headerShown: false, tabBarLabel: 'Información', tabBarIcon: ({ color, size }) => (<Icon name={'graduation-cap'} size={20} color={style.color.primary} /> ) }} />
-
+      {isTeacher &&
+        (
       <Tab.Screen name="StudentsList" 
         component={StudentsList} 
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Listado de alumnos'))} })} 
         options={{ headerShown: false, tabBarLabel: 'Alumnos', tabBarIcon: ({ color, size }) => (<Icon name={'child'} size={20} color={style.color.primary} /> ) }} />
-      
+      )
+      }
       <Tab.Screen name="ActivitiesList" 
         component={ActivitiesList} 
         listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Listado de actividades'))} })} 
