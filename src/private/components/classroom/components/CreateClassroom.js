@@ -53,9 +53,13 @@ const CreateClassroom = ({navigation}) => {
         });
       })
       .catch((error) => {
-        console.log('Hola');
-        console.log(error);
-        //updateError(error.res.data.message, setError);
+        if(error.response){
+          updateError(error.response.data.message, setError);
+        }
+        else{
+          console.log(error)
+          updateError('Ha ocurrido un error interno', setError);
+        }
       });
 
 
