@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupTeacher } from "../../../api";
 import {isValidObjField,isValidEmail,updateError } from "../../validations/Validations";
 
-const Signup = ({ navigation}) => {
+const SignupTeacher = ({ navigation}) => {
   const selected= require('./images/register.png')
   const navigate = navigation.navigate;
   const [showPassword, setShowPassword] = React.useState(false);
@@ -121,4 +121,4 @@ const Signup = ({ navigation}) => {
   );
 };
 
-export default Signup;
+export default SignupTeacher;
