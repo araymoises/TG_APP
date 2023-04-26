@@ -12,14 +12,18 @@ export const getToken = async () => {
     throw error;
   }
 }
-export const signup = (userInfo) => {
-    return axios.post(API+'/auth/signup', userInfo)
+export const signupTeacher = (teacherInfo) => {
+    return axios.post(API+'/auth/teachers/signup', teacherInfo)
 };
 
-  export const login = async (userInfo) => {
-      return axios.post(API+'/auth/login', userInfo);
-      
-  };
+export const signupStudent = (studentInfo) => {
+  return axios.post(API+'/auth/students/signup', studentInfo)
+};
+
+export const login = async (userInfo) => {
+    return axios.post(API+'/auth/login', userInfo);
+    
+};
 
 
 export const getClassrooms = async () => {

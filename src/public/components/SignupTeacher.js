@@ -13,14 +13,14 @@ import {
 } from 'native-base';
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {signup } from "./../../../api";
+import { signupTeacher } from "../../../api";
 import {isValidObjField,isValidEmail,updateError } from "../../validations/Validations";
 
 const Signup = ({ navigation}) => {
   const selected= require('./images/register.png')
   const navigate = navigation.navigate;
   const [showPassword, setShowPassword] = React.useState(false);
-  const [userInfo, setUserInfo] = useState({
+  const [teacherInfo, setTeacherInfo] = useState({
     firstname:'',
 		lastname:'',
     email:'',
@@ -28,14 +28,14 @@ const Signup = ({ navigation}) => {
 
   })
 
-  const {firstname,lastname,email,password} = userInfo;
+  const {firstname,lastname,email,password} = teacherInfo;
   const [error, setError] = useState('');
   const togglePassword = () => setShowPassword(!showPassword);
 
- const handleOnChangeText = (value, fieldName)=>{setUserInfo({...userInfo, [fieldName]:value})}
+ const handleOnChangeText = (value, fieldName)=>{setTeacherInfo({...teacherInfo, [fieldName]:value})}
   const isValidForm = () =>{
     //que solo acepte si todos los campos tienen valores
-    if(!isValidObjField(userInfo)) return updateError('Debe llenar todos los campos', setError)
+    if(!isValidObjField(teacherInfo)) return updateError('Debe llenar todos los campos', setError)
 
     if(!firstname.trim() || firstname.length < 3) return updateError('El nombre debe ser mayor a 3 letras', setError)
 
@@ -49,13 +49,13 @@ const Signup = ({ navigation}) => {
   }
   const onSignup = () => {
     if(isValidForm()) {
-        signup(userInfo).then((response) => {
-          if(response.data.success)
+        signupTeacher(teacherInfo).then((res) => {
+          if(res.data.success)
           {
-            setUserInfo({firstname:'',lastname:'',email:'',password:''});
+            setTeacherInfo({firstname:'',lastname:'',email:'',password:''});
             navigate('PublicRouter', { 
               screen: 'Login',
-              params: { message: '¡Usuario creado con éxito!' }
+              params: { messageSuccess: `${res.data.message}` }
             });
           }
         }).catch(error => {
@@ -65,7 +65,7 @@ const Signup = ({ navigation}) => {
           }
           else{
             console.log(error);
-            updateError('Ocurrio un error interno.', setError);
+            updateError('Ha ocurrido un error interno.', setError);
           }
         });
     
@@ -78,7 +78,7 @@ const Signup = ({ navigation}) => {
         
       <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: style.color.primary }}>
         <View style={{ flex: 1, paddingHorizontal: 20,  paddingVertical:20, backgroundColor: 'red', width: '100%', backgroundColor: style.color.primary, justifyContent: 'center' }}>
-          <Text style={{ ...style.text.subtitle, color: style.color.secondary }}>¡Bienvenido!</Text>
+          <Text style={{ ...style.text.subtitle, color: style.color.secondary, marginBottom:10 }}>Registro de Docentes</Text>
           <Text style={{ ...style.text.sm, color: style.color.secondary }}>Por favor, rellena los campos para registrarte.</Text>
         </View>      
         <View style={{ flex: 3, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>

@@ -22,15 +22,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { login } from "../../../api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {isValidObjField,isValidEmail,updateError } from "../../validations/Validations";
+import AlertSuccess from '~private/components/AlertSuccessLogin';
 
 
 const Login = ({ navigation, route}) => {
   const navigate = navigation.navigate;
   const selected= require('./images/login.png');
 
-  const { message } = route.params || { message: '' };
+  const messageSuccess = route.params?.messageSuccess || ''
   const [showPassword, setShowPassword] = useState(false);
-  const [showAlert, setShowAlert] = useState(true);
   const [userInfo, setUserInfo] = useState({
     email:'',
     password:''
@@ -94,15 +94,6 @@ const Login = ({ navigation, route}) => {
 
   }
 
-  useEffect(() => {
-    const hideAlert = setTimeout(() => {
-      setShowAlert(false);
-    }, 5000);
-
-    return () => clearTimeout(hideAlert);
-  }, []);
-
-
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: style.color.primary }}>
       <View style={{ flex: 1, paddingHorizontal: 20, paddingVertical:20, backgroundColor: 'red', width: '100%', backgroundColor: style.color.primary, justifyContent: 'center' }}>
@@ -121,24 +112,8 @@ const Login = ({ navigation, route}) => {
             />
       </View>
       <View style={{ flex: 3, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}} id="alert-register">
-        {message ?        
-            <Alert maxW="400" status="success" colorScheme="success">
-              <VStack space={2} flexShrink={1} w="100%">
-                <HStack flexShrink={1} space={2} alignItems="center" justifyContent="space-between">
-                  <HStack flexShrink={1} space={2} alignItems="center">
-                    <Alert.Icon />
-                    <Text fontSize="md" fontWeight="medium" color="coolGray.800">
-                      {message}
-                    </Text>
-                  </HStack>
-                </HStack>
-                <Box pl="6" _text={{
-                color: "coolGray.600"
-              }}>
-                  Por favor inicie sesión.
-                </Box>
-              </VStack>
-            </Alert>
+        {messageSuccess ?        
+            <AlertSuccess success={messageSuccess}/>
           :null
           }
         <Center>
