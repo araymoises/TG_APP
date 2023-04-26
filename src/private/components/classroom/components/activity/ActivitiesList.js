@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React,{useEffect,useState} from 'react';
 import {
   Text,
   View,
@@ -16,11 +16,14 @@ import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import randomColor from '../../../../../services/colorNames';
 
+import {getUserData  } from "../../../../../../api";
+
 // import { useSelector, useDispatch } from 'react-redux';
 // import { decrement, increment } from './../../../../redux/reducers/counterSlice';
 
 const ActivitiesList = ({ navigation }) => {
   const navigate = navigation.navigate;
+  const [isTeacher,setIsTeacher] = useState(false);
   // const count = useSelector((state) => state.counter.value);
   // const dispatch = useDispatch();
 
@@ -36,6 +39,19 @@ const ActivitiesList = ({ navigation }) => {
 
     navigate('ActivityRouter', { screen: 'ActivityDetailStudent' });
   }
+
+  const getUser = async()=>{
+    const user =  await getUserData();
+    if(user.teacher)
+    {
+      setIsTeacher(true);
+    }
+
+  }
+  useEffect(() => {
+    getUser()
+  }, [])
+  
 
   return (
     <View style={{ flex: 1, marginLeft: 5, backgroundColor: 'white' }} >
@@ -82,9 +98,11 @@ const ActivitiesList = ({ navigation }) => {
           </Pressable>
         </VStack>
       </ScrollView>
-
-      <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="plus" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onCreate}>Nueva Actividad</Button>
-    </View>
+      {isTeacher &&
+        (<Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="plus" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onCreate}>Nueva Actividad</Button>
+        )
+      }
+        </View>
   );
 };
 
