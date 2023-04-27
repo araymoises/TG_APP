@@ -53,5 +53,18 @@ export const saveClassrooms = async(classroom) =>{
 
 export const getClassroom = async (classroom) => {
   const token = await getToken();
-  return axios.get(API + '/classrooms/'+ classroom, {headers: {'Authorization': `Bearer ${token}`}});
+  return axios.get(API + '/classrooms/' + classroom, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+export const getAcivitiesStatusByClassroom = async (classroom) => {
+  const token = await getToken();
+  return axios.get(API + '/statistics/activities-status/classroom/' + classroom, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+export const getBestQualificationAverageByStudent = async (classroom) => {
+  const token = await getToken();
+  return axios.get(API + '/statistics/best-qualifications-average/classroom/' + classroom, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+export const getQualificationAverageByActivity = async (classroom) => {
+  const token = await getToken();
+  return axios.get(API + '/statistics/qualification-average-by-activity/classroom/' + classroom, { headers: { 'Authorization': `Bearer ${token}` } });
 }
