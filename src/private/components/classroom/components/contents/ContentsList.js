@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React,{useEffect,useState} from 'react'
 import {
     Text,
     View,
@@ -12,11 +12,13 @@ import {
   } from 'native-base';
   import style from '~styles';
   import Icon from 'react-native-vector-icons/FontAwesome';
+  import {getUserData  } from "../../../../../../api";
 
 const ContentsList = ({ navigation }) => {
 
    const navigate = navigation.navigate;
     const selected= require('./components/images/contents.png')
+    const [isTeacher,setIsTeacher] = useState(false);
     const [content, setContent] = useState([
       { name: 'La lectura',icon:'language', key:1},
       { name: 'La materia y la energía', icon:'tree', key:2},
@@ -41,6 +43,18 @@ const ContentsList = ({ navigation }) => {
       console.log('Detalle del contenido');
       navigate('ContentsRouter', { screen: 'ContentDetail' });
     }
+
+    const getUser = async()=>{
+      const user =  await getUserData();
+      if(user.teacher)
+      {
+        setIsTeacher(true);
+      }
+  
+    }
+    useEffect(() => {
+      getUser()
+    }, [])
     
   return (
     <View>
@@ -81,8 +95,12 @@ const ContentsList = ({ navigation }) => {
             })
           }
         </ScrollView>
+        {isTeacher &&
+        (
         <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="plus" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onCreate}>Nuevo Contenido</Button>
-    </View>
+        )
+        }
+      </View>
   )
 }
 

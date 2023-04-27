@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React,{useEffect,useState} from 'react';
 import {
   Text,
   View,
@@ -10,16 +10,35 @@ import {
 } from 'native-base';
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {getUserData  } from "../../../../../../../api";
 
 
 const ContentDetail = ({ navigation}) => {
   const navigate = navigation.navigate;
+  const [isTeacher,setIsTeacher] = useState(false);
 
-  const onEdit = () => {
+  const onActivity = () => {
     console.log('Nuevo contenido.');
     //navigate('ContentsRouter', { screen: 'ContentEdit' });
     navigate('ActivityView');
   }
+  const onEdit = () => {
+    console.log('Editar contenido.');
+    navigate('ContentsRouter', { screen: 'ContentEdit' });
+  }
+
+  const getUser = async()=>{
+    const user =  await getUserData();
+    if(user.teacher)
+    {
+      setIsTeacher(true);
+    }
+
+  }
+  useEffect(() => {
+    getUser()
+  }, [])
+  
   return (
     <View>
    
@@ -59,8 +78,17 @@ const ContentDetail = ({ navigation}) => {
           </View>
      
       </ScrollView>
-      <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} rightIcon={<Icon name="play" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onEdit}>Realizar actividad</Button>
-  </View>
+      {!isTeacher &&
+        (
+      <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} rightIcon={<Icon name="play" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onActivity}>Realizar actividad</Button>
+      )
+      }
+
+      {isTeacher &&
+        (<Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="edit" size={15} color={ style.color.secondary } />} _text={{ color: style.color.secondary }} onPress={onEdit}>Editar Contenido</Button>
+        )
+      }
+</View>
 
 
 
