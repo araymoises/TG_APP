@@ -6,6 +6,8 @@ import {
   ScrollView,
   Divider,
   Button,
+  Center,
+  Modal
 } from 'native-base';
 import style from '~styles';
 import randomColor from '../../../../services/colorNames';
@@ -26,6 +28,7 @@ const ClassroomDetail = ({ navigation,route }) => {
   const [classroom, setClassroom] = useState([]);
   const [message,setMessage]= useState('');
   const [isTeacher,setIsTeacher] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const chartConfig = {
     backgroundColor: "#00326F",
     backgroundGradientFrom: "#00326F",
@@ -102,6 +105,10 @@ const ClassroomDetail = ({ navigation,route }) => {
     console.log('edit aula');
     navigate('ClassroomAdminRouter', { screen: 'EditClassroom' });
   }
+  const onDelete = ()=>{
+
+
+  }
 
 
   const loadClassroom = (id) => {
@@ -150,7 +157,19 @@ const ClassroomDetail = ({ navigation,route }) => {
       </View>
 
       <View style={{ flex: 2, width: '100%', padding: 20 }}>
-        <Text mt={2} style={{ ...style.text.subtitle}}>{classroom.description}</Text>
+        <View style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flex: 3}}>
+            <Text mt={2} style={{ ...style.text.subtitle}}>{classroom.description}</Text>
+          </View>
+          {isTeacher &&
+          (
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                <Button style={{ backgroundColor:style.color.red, borderRadius: 20}} leftIcon={<Icon name="trash" size={18} color={ style.color.white } />} _text={{ color: style.color.secondary }} onPress={() => setShowModal(true)}></Button>
+          </View>
+          )
+        }
+        </View>
+        
         <Text mt={2} style={{ ...style.text.md, fontWeight: 'bold'}}>{classroom.name}</Text>
         <Divider my={1} />
       </View>
@@ -222,6 +241,34 @@ const ClassroomDetail = ({ navigation,route }) => {
           }}
         />
       </View>
+      <Center>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <Modal.Content maxWidth="400px">
+            <Modal.Body>
+             <Text style={{ ...style.text.sm,lineHeight: 20}}>¿Está seguro que desea eliminar el aula?</Text>
+            </Modal.Body>
+            <Modal.Footer borderTopWidth={0}>
+              <Button.Group space={2}>
+                <Button variant="ghost" colorScheme="blueGray" onPress={() => {
+                setShowModal(false);
+              }}>
+                  Cancelar
+                </Button>
+                <Button onPress={() => {
+                setShowModal(false);}}
+                style={{ backgroundColor:style.color.red}} leftIcon={<Icon name="trash" size={18} color={ style.color.white } />} _text={{ color: style.color.secondary }}
+                >
+                 Eliminar
+                </Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+      </Center>
+
+
+
+
     </ScrollView>
     {isTeacher &&
         (

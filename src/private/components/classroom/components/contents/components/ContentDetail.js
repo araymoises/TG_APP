@@ -7,6 +7,7 @@ import {
   ScrollView,
   AspectRatio,
   Button,
+  Modal
 } from 'native-base';
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,6 +17,7 @@ import {getUserData  } from "../../../../../../../api";
 const ContentDetail = ({ navigation}) => {
   const navigate = navigation.navigate;
   const [isTeacher,setIsTeacher] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const onActivity = () => {
     console.log('Nuevo contenido.');
@@ -38,14 +40,28 @@ const ContentDetail = ({ navigation}) => {
   useEffect(() => {
     getUser()
   }, [])
+
+  const onDelete = ()=>{
+
+
+  }
   
   return (
     <View>
    
     <ScrollView contentContainerStyle={{  flexGrow: 1,justifyContent: 'flex-start', paddingHorizontal:20, paddingVertical:20}}>      
-         <View>
-             <Text marginBottom={5} marginTop={5} style={{ ...style.text.title, color: style.color.primary, fontWeight: 'bold'}}>La lectura</Text>
-         </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flex: 3}}>
+            <Text marginBottom={5} marginTop={5} style={{ ...style.text.title, color: style.color.primary, fontWeight: 'bold'}}>La lectura</Text>
+          </View>
+          {isTeacher &&
+          (
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                <Button style={{ backgroundColor:style.color.red, borderRadius: 20}} leftIcon={<Icon name="trash" size={18} color={ style.color.white } />} _text={{ color: style.color.secondary }} onPress={() => setShowModal(true)}></Button>
+          </View>
+          )
+          }
+        </View>
           <View style={{paddingVertical:10}}>
             <AspectRatio w="100%" ratio={16 / 9}>
               <Image source={{
@@ -76,6 +92,31 @@ const ContentDetail = ({ navigation}) => {
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
               </Text>
           </View>
+
+          <Center>
+              <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+                <Modal.Content maxWidth="400px">
+                  <Modal.Body>
+                  <Text style={{ ...style.text.sm,lineHeight: 20}}>¿Está seguro que desea eliminar el contenido?</Text>
+                  </Modal.Body>
+                  <Modal.Footer borderTopWidth={0}>
+                    <Button.Group space={2}>
+                      <Button variant="ghost" colorScheme="blueGray" onPress={() => {
+                      setShowModal(false);
+                    }}>
+                        Cancelar
+                      </Button>
+                      <Button onPress={() => {
+                      setShowModal(false);}}
+                      style={{ backgroundColor:style.color.red}} leftIcon={<Icon name="trash" size={18} color={ style.color.white } />} _text={{ color: style.color.secondary }}
+                      >
+                      Eliminar
+                      </Button>
+                    </Button.Group>
+                  </Modal.Footer>
+                </Modal.Content>
+              </Modal>
+        </Center>
      
       </ScrollView>
       {!isTeacher &&

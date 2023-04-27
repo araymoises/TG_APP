@@ -5,6 +5,7 @@ const styles = {
     tertiary: "#626EE0",
     amber:"#fcd34d",
     white: "#FFF",
+    red:"#f44336",
   },
   button: {
     primary: {
