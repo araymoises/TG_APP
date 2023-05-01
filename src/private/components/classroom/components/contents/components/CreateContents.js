@@ -22,6 +22,7 @@ const CreateContents = ({ navigation }) => {
   const selected = require('./images/book.png')
   const [contentName, setContentName] = useState('');
   const onPressNext = () => {
+    setContentName('')
     navigate('ContentsRouter', { screen: 'CreateContentsTwo', params: { contentName } });
   }
 
