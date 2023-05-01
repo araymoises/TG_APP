@@ -41,7 +41,7 @@ const CreateContents = () => {
     setShowModal(true)
   }
 
-  createSection = () => {
+  const createSection = () => {
     let _sections = JSON.parse(JSON.stringify(sections))
     _sections.push({
       sectionType,
@@ -51,7 +51,7 @@ const CreateContents = () => {
     setShowModal(false)
   }
 
-  sectionTextStyle = (sectionType) => {
+  const sectionTextStyle = (sectionType) => {
     if (sectionType == 'title') {
       return {
         color: '#202123',
@@ -86,7 +86,7 @@ const CreateContents = () => {
             <Stack mt={2} space={4} w="100%" maxW="400px">
               {
                 sections.map((section, index) => {
-                  return (<Pressable>
+                  return (<Pressable onLongPress={() => console.log("event -> onLongPress")}>
                     <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
                       <Text style={sectionTextStyle(section.sectionType)} >{section.sectionText}</Text>
                     </View>
@@ -95,7 +95,7 @@ const CreateContents = () => {
               }
               <Pressable onPress={() => newSection()}>
                 <View style={{ flex: 1, paddingHorizontal: 20, height: 100, justifyContent: 'center', width: '100%', backgroundColor: 'white', borderRadius: 10, borderStyle: 'dashed', borderWidth: 3, borderColor: '#babfc4' }}>
-                  <Text style={{ color: style.color.tertiary, fontWeight: 'bold', fontSize: 20, textAlign: 'center', marginTop: 10 }} >¡Toca aquí para agregar tu primera sección del contenido!</Text>
+                  <Text style={{ color: style.color.tertiary, fontWeight: 'bold', fontSize: 20, textAlign: 'center', marginTop: 10 }} >{sections.length ? 'Agregar nueva sección' : '¡Toca aquí para agregar tu primera sección del contenido!'}</Text>
                   <Text style={{ color: style.color.tertiary, fontWeight: 'bold', fontSize: 25, textAlign: 'center', marginTop: 10 }} >+</Text>
                   {/*
                     <RichEditor
@@ -148,9 +148,7 @@ const CreateContents = () => {
                 }}>
                   Cancelar
                 </Button>
-                <Button onPress={() => createSection()}
-                  style={{ backgroundColor: style.color.primary }} leftIcon={<Icon name="trash" size={18} color={style.color.white} />} _text={{ color: style.color.secondary }}
-                >
+                <Button onPress={() => createSection()} style={{ backgroundColor: style.color.primary }} leftIcon={<Icon name="trash" size={18} color={style.color.white} />} _text={{ color: style.color.secondary }}>
                   Crear
                 </Button>
               </Button.Group>
