@@ -20,7 +20,7 @@ import { setPlaneSelected } from './../../../../../../redux/reducers/classroomTi
 //import * as objects from './objects/index';
 import * as objects from './objects/index';
 import style from '../../../../../../styles';
-import { getActivityById } from './../../../../../../../api';
+import { getActivityById, saveQualification, getUserData } from './../../../../../../../api';
 
 const ARActivity = (props) => {
   const dispatch = useDispatch();
@@ -162,17 +162,20 @@ const Activity = ({ navigation, route }) => {
 
       const _buttonStyle = result.answers.map(answer => {
         return {
-          paddingHorizontal: 8,
-          paddingVertical: 6,
-          borderRadius: 5,
-          backgroundColor: "#61DAFB",
-          alignSelf: "flex-start",
-          marginHorizontal: "1%",
-          marginBottom: 8,
-          minWidth: "48%",
-          textAlign: "center",
-          fontSize: 12,
-          fontWeight: "500"
+          id: answer._id,
+          styles: {
+            paddingHorizontal: 8,
+            paddingVertical: 6,
+            borderRadius: 5,
+            backgroundColor: "#61DAFB",
+            alignSelf: "flex-start",
+            marginHorizontal: "1%",
+            marginBottom: 8,
+            minWidth: "48%",
+            textAlign: "center",
+            fontSize: 12,
+            fontWeight: "500"
+          }
         }
       })
       console.log('_buttonStyle');
@@ -210,36 +213,62 @@ const Activity = ({ navigation, route }) => {
 
     if (!isAlredyIn) {
       _selectedAnswers.push(answerId)
-      buttonStyleFunction(true, index)
-    } else {
-      buttonStyleFunction(false, index)
     }
     console.log('_selectedAnswers');
     console.log(_selectedAnswers);
     setSelectedAnswers(_selectedAnswers)
+    buttonStyleFunction(_selectedAnswers)
   }
 
-  const buttonStyleFunction = (isSelected, index) => {
+  const buttonStyleFunction = (selectedAnswers) => {
+    _selectedAnswers = JSON.parse(JSON.stringify(selectedAnswers))
     _buttonStyle = JSON.parse(JSON.stringify(buttonStyle))
 
-    _buttonStyle[index] = {
-      paddingHorizontal: 8,
-      paddingVertical: 6,
-      borderRadius: 5,
-      backgroundColor: isSelected ? "#5eba7d" : "#61DAFB",
-      alignSelf: "flex-start",
-      marginHorizontal: "1%",
-      marginBottom: 8,
-      minWidth: "48%",
-      textAlign: "center",
-      fontSize: 12,
-      fontWeight: "500"
-    }
+    _buttonStyle = _buttonStyle.map((bs, index) => {
+      let _bs = JSON.parse(JSON.stringify(bs))
+      if (selectedAnswers.includes(bs.id)) {
+        return {
+          id: bs.id,
+          styles: {
+            paddingHorizontal: 8,
+            paddingVertical: 6,
+            borderRadius: 5,
+            backgroundColor: "#5eba7d",
+            alignSelf: "flex-start",
+            marginHorizontal: "1%",
+            marginBottom: 8,
+            minWidth: "48%",
+            textAlign: "center",
+            fontSize: 12,
+            fontWeight: "500"
+          }
+        }
+      } else {
+        return {
+          id: bs.id,
+          styles: {
+            paddingHorizontal: 8,
+            paddingVertical: 6,
+            borderRadius: 5,
+            backgroundColor: "#61DAFB",
+            alignSelf: "flex-start",
+            marginHorizontal: "1%",
+            marginBottom: 8,
+            minWidth: "48%",
+            textAlign: "center",
+            fontSize: 12,
+            fontWeight: "500"
+          }
+        }
+      }
+    })
 
+    console.log('_buttonStyle');
+    console.log(_buttonStyle);
     setButtonStyle(_buttonStyle)
   }
 
-  const onPressFinish = () => {
+  const onPressFinish = async () => {
     let isCorrect = []
     console.log('selectedAnswers');
     console.log(selectedAnswers);
@@ -256,12 +285,35 @@ const Activity = ({ navigation, route }) => {
       }
     })
 
+    const { id } = await getUserData()
+    let qualification = {
+      activity: activity.id,
+      student: id
+    }
 
+    let result
     if (isCorrect.length && isCorrect.length == activity.answers.length) {
       console.log('¡Es correcto!')
+      result = true
+      qualification.qualification = activity.max_qualification
     } else {
       console.log('Es incorrecto.')
+      result = false
+      qualification.qualification = '0'
     }
+
+    console.log('qualification');
+    console.log(qualification);
+    saveQualification(qualification).then((res) => {
+      console.log('¡Guardado!');
+      console.log(res.data);
+    }).catch((error) => {
+      console.log('Error al guardar calificacion.');
+      console.log(error);
+      console.log(error.response.data);
+    }).finally(() => {
+      navigate('ActivityRouter', { screen: 'ActivityCompletion', params: { isCorrect: result } });
+    })
   }
 
   return (
@@ -285,7 +337,7 @@ const Activity = ({ navigation, route }) => {
                           <TouchableOpacity
                             key={answer.id}
                             onPress={(event) => onPressOption(answer.id, index)}
-                            style={buttonStyle}
+                            style={buttonStyle[index].styles}
                           >
                             <Text style={styles.buttonLabel}> {answer.title} </Text>
                           </TouchableOpacity>

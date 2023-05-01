@@ -78,3 +78,9 @@ export const getActivityById = async (activity) => {
   const token = await getToken();
   return axios.get(API + '/activities/' + activity, { headers: { 'Authorization': `Bearer ${token}` } });
 }
+
+// CRUD Actividades
+export const saveQualification = async (qualification) => {
+  const token = await getToken();
+  return axios.post(`${API}/qualifications/save/`, qualification, { headers: { 'Authorization': `Bearer ${token}` } });
+}

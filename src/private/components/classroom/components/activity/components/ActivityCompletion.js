@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
-  Input, 
-  Stack, 
+  Input,
+  Stack,
   Center,
   Button,
   Image,
@@ -23,20 +23,20 @@ const ActivityCompletion = ({ route, navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
-      <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white'}}>
-      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:21, textAlign:'center', marginTop:10}} >Has finalizado la actividad</Text>
-      <Text style={{color:style.color.primary, fontWeight: 'bold', fontSize:18, textAlign:'center'}} >{ isCorrect ? 'Has respondido correctamente, ¡felicidades!' : 'Has respondido incorrectamente.'}</Text>
-      <Text style={{color:style.color.tertiary, fontWeight: 'bold', fontSize:18, textAlign:'center'}} >{ isCorrect ? '' : `Respuesta correcta: Halcón`}</Text>
-      <Image
-                justifyContent="center"
-                alignItems="center"
-                source={isCorrect ? correctAnswerImage : incorrectAnswerImage}
-                alt="image"
-                size="2xl"
-                key="lg"
-                resizeMode="cover"
-                mx="auto"
-            />
+      <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
+        <Text style={{ color: style.color.primary, fontWeight: 'bold', fontSize: 21, textAlign: 'center', marginTop: 10 }} >Has finalizado la actividad</Text>
+        <Text style={{ color: style.color.primary, fontWeight: 'bold', fontSize: 18, textAlign: 'center' }} >{isCorrect ? 'Has respondido correctamente, ¡felicidades!' : 'Has respondido incorrectamente.'}</Text>
+        <Text style={{ color: style.color.tertiary, fontWeight: 'bold', fontSize: 18, textAlign: 'center' }} >{isCorrect ? '' : `Respuesta correcta: Halcón`}</Text>
+        <Image
+          justifyContent="center"
+          alignItems="center"
+          source={isCorrect ? correctAnswerImage : incorrectAnswerImage}
+          alt="image"
+          size="2xl"
+          key="lg"
+          resizeMode="cover"
+          mx="auto"
+        />
       </View>
       <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
         <Center>
