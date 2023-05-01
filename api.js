@@ -58,7 +58,7 @@ export const getClassroom = async (classroom) => {
 }
 
 
-// Estadísticas
+// Statistics
 export const getAcivitiesStatusByClassroom = async (classroom) => {
   const token = await getToken();
   return axios.get(API + '/statistics/activities-status/classroom/' + classroom, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -73,14 +73,20 @@ export const getQualificationAverageByActivity = async (classroom) => {
 }
 
 
-// CRUD Actividades
+// CRUD Activities
 export const getActivityById = async (activity) => {
   const token = await getToken();
   return axios.get(API + '/activities/' + activity, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
-// CRUD Actividades
+// CRUD qualifications
 export const saveQualification = async (qualification) => {
   const token = await getToken();
   return axios.post(`${API}/qualifications/save/`, qualification, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+// CRUD contents
+export const saveContent = async (content) => {
+  const token = await getToken();
+  return axios.post(`${API}/contents/save/`, content, { headers: { 'Authorization': `Bearer ${token}` } });
 }

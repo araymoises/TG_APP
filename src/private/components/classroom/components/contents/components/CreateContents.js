@@ -20,9 +20,9 @@ import style from '~styles';
 const CreateContents = ({ navigation }) => {
   const navigate = navigation.navigate;
   const selected = require('./images/book.png')
-  let [classroom, setClassroom] = useState("");
+  const [contentName, setContentName] = useState('');
   const onPressNext = () => {
-    navigate('ContentsRouter', { screen: 'CreateContentsTwo' });
+    navigate('ContentsRouter', { screen: 'CreateContentsTwo', params: { contentName } });
   }
 
   return (
@@ -40,7 +40,7 @@ const CreateContents = ({ navigation }) => {
         />
         <Center>
           <Stack mt={2} space={4} w="100%" maxW="400px">
-            <Input size="lg" variant="underlined" placeholder="Título" />
+            <Input size="lg" variant="underlined" placeholder="Título" value={contentName} onChangeText={(value) => setContentName(value)} />
             <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} onPress={() => onPressNext()}>Siguiente</Button>
           </Stack>
         </Center>
