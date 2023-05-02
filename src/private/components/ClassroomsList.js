@@ -31,8 +31,9 @@ const Classrooms = ({ navigation,route }) => {
   const navigate = navigation.navigate;
   const [classrooms, setClassrooms] = useState([]);
   const [message,setMessage]= useState('');
-  const messageSuccess = route.params?.messageSuccess || '';
+  const [messageSuccess,setMessageSuccess] = useState('');
   const [isTeacher,setIsTeacher] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   
   const onCreate = () => {
     navigate('ClassroomAdminRouter', { screen: 'CreateClassroom' });
@@ -61,7 +62,7 @@ const Classrooms = ({ navigation,route }) => {
 
   useEffect(() => {
     loadClassrooms()
-  }, [])
+  }, [classrooms])
 
   const getUser = async()=>{
     const user =  await getUserData();
@@ -74,6 +75,18 @@ const Classrooms = ({ navigation,route }) => {
   useEffect(() => {
     getUser()
   }, [])
+
+  useEffect(() => {
+    console.log('useEffect called:'+route.params?.messageSuccess);
+    if (route.params?.messageSuccess) {
+      setMessageSuccess(route.params.messageSuccess)
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+        setMessageSuccess('');
+      }, 3000);
+    }
+  }, [route.params?.messageSuccess]);
   
   return (
     <View style={{ flex: 1 }} >
@@ -88,11 +101,9 @@ const Classrooms = ({ navigation,route }) => {
           <AlertError error={message}/>
         :null
         }
-
-        {messageSuccess ?
-          <AlertSuccess success={messageSuccess}/>
-        :null
-        }
+         {showAlert &&
+          <AlertSuccess success={messageSuccess}
+        />}
 
          {classrooms.map((classroom, item) => (
           <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>

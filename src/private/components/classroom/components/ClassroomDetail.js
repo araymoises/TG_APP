@@ -19,7 +19,7 @@ import {
   PieChart,
 } from "react-native-chart-kit";
 import { getClassroom, getAcivitiesStatusByClassroom, getBestQualificationAverageByStudent, getQualificationAverageByActivity } from "../../../../../api";
-import { getUserData } from "../../../../../api";
+import { getUserData,deleteClassroom } from "../../../../../api";
 import AlertError from '../../AlertError';
 
 const ClassroomDetail = ({ navigation, route }) => {
@@ -67,15 +67,6 @@ const ClassroomDetail = ({ navigation, route }) => {
   }
 
   const screenWidth = Dimensions.get("window").width - 50;
-
-  const onEdit = () => {
-    console.log('edit aula');
-    navigate('ClassroomAdminRouter', { screen: 'EditClassroom' });
-  }
-  const onDelete = () => {
-
-
-  }
 
   const loadClassroom = async (id) => {
     getClassroom(id)
@@ -178,7 +169,35 @@ const ClassroomDetail = ({ navigation, route }) => {
   }
   useEffect(() => {
     getUser()
-  }, [])
+  }, [isTeacher])
+
+  const onDelete = () => {
+    deleteClassroom(id)
+    .then((res) => {
+      console.log('Res:')
+      console.log(res.data.message)
+      setShowModal(false)
+      navigate('ClassroomAdminRouter', { screen: 'ClassroomsList',
+      params: { messageSuccess: `${res.data.message}` }
+      });
+    })
+    .catch((error) => {
+      if(error.response){
+        updateError(error.response.data.message, setError);
+      }
+      else{
+        console.log(error)
+        updateError('Ha ocurrido un error interno', setError);
+      }
+    });
+  }
+  const onEdit = () => {
+    console.log('edit aula');
+    navigate('ClassroomAdminRouter',
+    { screen: 'EditClassroom',
+    params: { classroomEdit: classroom}
+    });
+  }
 
   return (
     <View style={{ flex: 1 }} >
@@ -299,9 +318,7 @@ const ClassroomDetail = ({ navigation, route }) => {
                   }}>
                     Cancelar
                   </Button>
-                  <Button onPress={() => {
-                    setShowModal(false);
-                  }}
+                  <Button onPress={onDelete}
                     style={{ backgroundColor: style.color.red }} leftIcon={<Icon name="trash" size={18} color={style.color.white} />} _text={{ color: style.color.secondary }}
                   >
                     Eliminar

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API = "http://192.168.1.100:3000";
+const API = "http://192.168.100.3:3000";
 export const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('token')
@@ -57,6 +57,17 @@ export const getClassroom = async (classroom) => {
   return axios.get(API + '/classrooms/' + classroom, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
+export const deleteClassroom = async(classroom)=>{
+  const token = await getToken();
+  return axios.delete(API + '/classrooms/delete/'+ classroom, {headers: {'Authorization': `Bearer ${token}`}});
+}
+
+export const updateClassroom = async(classroom,id)=>{
+  const token = await getToken();
+  console.log('classroom')
+  console.log(classroom)
+  return axios.patch(API + '/classrooms/update/'+ id,classroom, {headers: {'Authorization': `Bearer ${token}`}});
+}
 
 // Estadísticas
 export const getAcivitiesStatusByClassroom = async (classroom) => {

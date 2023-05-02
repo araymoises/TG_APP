@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect }from 'react';
 import DatePicker from 'react-native-date-picker';
 import {
   View,
@@ -14,31 +14,70 @@ import {
   Text,
 } from 'native-base';
 import style from '~styles';
+import { updateClassroom } from "./../../../../../api";
+import {isValidObjField,updateError } from "../../../../validations/Validations";
 
-const EditClassroom = () => {
-
+const EditClassroom = ({navigation,route}) => {
   const selected= require('./images/classroom.png')
+  const navigate = navigation.navigate;
+  const id = route.params?.classroomEdit.id || '';
+  const [classroom, setClassroom] = useState({
+    name:'',
+    description:''
 
-  let [content, setContent] = useState("");
-  let [status, setStatus] = useState("");
+  })
 
-  let [activity, setActivity] = useState("");
-  const [dateStart, setDateStart] = useState(new Date());
-  const [dateEnd, setDateEnd] = useState(new Date());
-  const [anwser, setAnswer] = useState("");
-  const [object, setObject] = useState([
-    { name: 'Accesorio de iluminación', key:1},
-    { name: 'Agenda', key:2},
-    { name: 'Águila', key:3},
-    { name: 'Araña', key:4},
-    { name: 'Árbol de navidad', key:5},
-    { name: 'Armadillo', key:6},
-    { name: 'Audífonos', key:7},      
-    { name: 'Avión Militar', key:8},
-    { name: 'Bombillo', key:9},
-    { name: 'Borrador', key:10},
+  const {name,description} = classroom;
+  const [error, setError] = useState('');
 
-  ])
+  const handleOnChangeText = (value, fieldName)=>{setClassroom({...classroom, [fieldName]:value})}
+  const isValidForm = () =>{
+    if(!isValidObjField(classroom)) return updateError('Debe llenar todos los campos', setError)
+    if(!name.trim() || name.length > 3) return updateError('El nombre debe tener menos de 3 letras', setError)
+    if(!description.trim() || description.length < 8) return updateError('La descripción debe tener más de 8 letras', setError)
+
+    return true;
+  }
+  const loadClassroom = () =>
+  {
+    if(route.params.classroomEdit)
+    {
+      setClassroom({name:route.params.classroomEdit.name,
+                    description:route.params.classroomEdit.description});
+    }
+    console.log(route.params.classroomEdit)
+  }
+
+  useEffect(() => {
+    loadClassroom()
+  }, [route.params.classroomEdit])
+  
+
+  const onEditClassroom = () =>
+  {
+    console.log('entre a onEditClassroom')
+      if(isValidForm())
+      {
+      updateClassroom(classroom,id)
+      .then((res) => {
+        navigate('ClassroomAdminRouter', { screen: 'ClassroomsList',
+        params: { messageSuccess: `${res.data.message}` }
+        });
+      })
+      .catch((error) => {
+        if(error.response){
+          updateError(error.response.data.message, setError);
+        }
+        else{
+          console.log(error)
+          updateError('Ha ocurrido un error interno', setError);
+        }
+      });
+
+
+      }
+
+  }
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -55,24 +94,17 @@ const EditClassroom = () => {
             />
         
         <Center>
+          {error ? <Text style={{color:'red', fontSize:18, textAlign:'center'}}>{error}</Text>:null}
           <Stack mt={2} space={4} w="100%" maxW="400px">
-            <Input size="lg" variant="underlined" placeholder="Nombre del Aula" />
-            <Input size="lg" variant="underlined" placeholder="Descripción del Aula" />
-            <Box>
-                  <Select selectedValue={status}  minWidth="200" accessibilityLabel="Status" placeholder="Status" _selectedItem={{
-                  bg: "info.600",
-                  color: '#404040',
-                  placeholderTextColor: '#404040',
-                  endIcon: <CheckIcon size="5" />,
-                  }}
-                  mt={1} onValueChange={itemValue => setContent(itemValue)}
-                  style={{...style.text.smSelect}}
-                >
-                    <Select.Item label="Activo" value="true" />
-                    <Select.Item label="Inactivo" value="false" />
-                  </Select>
-            </Box>
-            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }}>Editar</Button>
+            <Input size="lg" variant="underlined" placeholder="Nombre del Aula"
+            value={name} 
+             onChangeText={ (value) => handleOnChangeText(value, 'name') }
+            />
+            <Input size="lg" variant="underlined" placeholder="Descripción del Aula"
+            value={description} 
+             onChangeText={ (value) => handleOnChangeText(value, 'description') }
+            />
+            <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} onPress={onEditClassroom}>Editar</Button>
           </Stack>
         </Center>
       </View>
