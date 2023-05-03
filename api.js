@@ -101,3 +101,12 @@ export const saveContent = async (content) => {
   const token = await getToken();
   return axios.post(`${API}/contents/save/`, content, { headers: { 'Authorization': `Bearer ${token}` } });
 }
+
+
+//CRUD students
+export const getStudents = async (classroom) => {
+  const token = await getToken();
+  return axios.get(API + '/students/classroom/'+ classroom,{
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+}
