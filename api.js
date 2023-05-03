@@ -110,3 +110,23 @@ export const getStudents = async (classroom) => {
     headers: { 'Authorization': `Bearer ${token}` }
   });
 }
+
+export const getStudentById = async (student) => {
+  const token = await getToken();
+  return axios.get(API + '/students/' + student, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+export const updateStudent = async(student,id)=>{
+  const token = await getToken();
+  return axios.patch(API + '/students/update/'+ id,student, {headers: {'Authorization': `Bearer ${token}`}});
+}
+
+export const deleteStudent = async(student)=>{
+  const token = await getToken();
+  return axios.delete(API + '/students/delete/'+ student, {headers: {'Authorization': `Bearer ${token}`}});
+}
+
+export const studentInvite = async(student)=>{
+  const token = await getToken();
+  console.log('Invitar estudiante');
+}
