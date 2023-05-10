@@ -42,7 +42,14 @@ const Login = ({ navigation, route}) => {
 
 
   const togglePassword = () => setShowPassword(!showPassword);
-
+  const clearAsyncStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      console.log('AsyncStorage successfully cleared!');
+    } catch (error) {
+      console.log('Error clearing AsyncStorage!', error);
+    }
+  }
   const onSignup= () => {
     console.log('Ir al register');
     navigate('PublicRouter', { screen: 'Signup' });
@@ -52,6 +59,10 @@ const Login = ({ navigation, route}) => {
 
     navigate('PublicRouter', { screen: 'ForgotPassword' });
   }
+  useEffect(() => {
+    clearAsyncStorage();
+  }, [])
+  
 
   const handleOnChangeText = (value, fieldName)=>{setUserInfo({...userInfo, [fieldName]:value})}
   const isValidForm = () =>{

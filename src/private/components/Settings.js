@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import {
     Text,
     View,
@@ -16,11 +16,14 @@ import {
   import style from '~styles';
   
   import Icon from 'react-native-vector-icons/FontAwesome';
+  import { getUserData } from 'api';
 
 const Settings = ({ navigation }) => {
 
   
   const selected= require('./images/user.png')
+  const [isTeacher,setIsTeacher] = useState(false);
+  const [user,setUser]=useState([]);
 
   
   const navigate = navigation.navigate;
@@ -36,7 +39,24 @@ const Settings = ({ navigation }) => {
 
     navigate('ProfileRouter', { screen: 'ResetPassword' });
   }
+  const getUser = async () => {
+    const userData = await getUserData();
+    console.log(userData);
+    setUser(userData);
+    
+    if (userData.teacher) {
+      setIsTeacher(true);
+    }
+  }
+  useEffect(() => {
+    getUser()
+  }, [])
 
+  useEffect(() => {
+    console.log(isTeacher)
+  }, [])
+  
+  console.log(isTeacher)
  
   return (
     <ScrollView contentContainerStyle={{  flexGrow: 1,justifyContent: 'flex-start', paddingHorizontal:20,paddingVertical:20}}>
@@ -46,15 +66,28 @@ const Settings = ({ navigation }) => {
           md: "flex-start"
         }}>
             <Avatar bg={style.color.primary} alignSelf="center" size="2xl" source={{
-            uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"
+            uri: ""
             }}>
-              HB
+              {isTeacher && user.teacher ?
+              <Text
+                style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}
+              >{user.teacher.firstname.charAt(0)} {user.teacher.lastname.charAt(0)}</Text>
+              : 
+              <Text
+                style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}
+              >{user.student.firstname.charAt(0)} {user.student.lastname.charAt(0)}</Text>
+              }
             </Avatar>
-            <Text style={{color:style.color.primary, fontWeight: 'bold'}}>Henry Bueno</Text>
-            <Text style={{color:style.color.primary, fontWeight: 'bold'}}>henrybueno@gmail.com</Text>
+            {/* <Avatar bg={style.color.primary} alignSelf="center" size="2xl" source={{ uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80" }}> HB </Avatar> */}
+
+            <Text style={{color:style.color.primary, fontWeight: 'bold'}}>{user.name}</Text>
+            <Text style={{color:style.color.primary, fontWeight: 'bold'}}>{user.email}</Text>
       </VStack>
     </Center>
+    {!isTeacher &&
+        (
     <VStack w="100%" space={4} px="2"  alignItems="center" justifyContent="center">
+      
         <Stack mt="1.5" flexDirection="row" space={2} mx={{
         base: "auto",
         md: "0"
@@ -67,7 +100,8 @@ const Settings = ({ navigation }) => {
             </Box>
             
         </Stack>
-      </VStack>
+    </VStack>
+    )}
     <VStack w="100%" space={4} px="2" mt="4" alignItems="center" justifyContent="space-between">
         <Stack mb="2.5" mt="1.5" flexDirection="row" space={2} mx={{
         base: "auto",
