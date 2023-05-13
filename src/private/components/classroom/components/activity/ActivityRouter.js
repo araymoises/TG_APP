@@ -16,27 +16,27 @@ const ActivityRouter = () => {
   return (
     <Stack.Navigator initialRouteName="CreateActivity">
       <Stack.Screen name="CreateActivity" component={CreateActivity}
-        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Crear Actividad'))} })} 
+        listeners={() => ({ focus: () => { dispatch(setClassroomTitle('Crear Actividad')) } })}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen name="ActivityDetailTeacher" component={ActivityDetailTeacher}
-        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Detalle de la actividad'))} })} 
+        listeners={() => ({ focus: () => { dispatch(setClassroomTitle('Detalle de la actividad')) } })}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen name="ActivityDetailStudent" component={ActivityDetailStudent}
-        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Detalle de la actividad'))} })} 
+        listeners={() => ({ focus: () => { dispatch(setClassroomTitle('Detalle de la actividad')) } })}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen name="ActivityCompletion" component={ActivityCompletion}
-        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Actividad finalizada'))} })} 
+        listeners={() => ({ focus: () => { dispatch(setClassroomTitle('Actividad finalizada')) } })}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen name="ActivityView" component={ActivityView}
-        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Actividad en curso'))} })} 
+        listeners={() => ({ focus: () => { dispatch(setClassroomTitle('Actividad en curso')) } })}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
