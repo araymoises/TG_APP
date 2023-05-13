@@ -37,7 +37,6 @@ export const login = async (userInfo) => {
 
 };
 
-
 export const getClassrooms = async () => {
   const token = await getToken();
   return axios.get(API + '/classrooms', {
@@ -143,4 +142,10 @@ export const deleteStudent = async (student) => {
 export const studentInvite = async (student) => {
   const token = await getToken();
   console.log('Invitar estudiante');
+}
+
+// CRUD Teachers
+export const updateTeacher = async (teacher, id) => {
+  const token = await getToken();
+  return axios.patch(`${API}/teachers/update/${id}`, teacher, { headers: { 'Authorization': `Bearer ${token}` } });
 }
