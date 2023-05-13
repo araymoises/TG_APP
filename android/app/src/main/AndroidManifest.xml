@@ -32,8 +32,26 @@
         android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize">
         <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <!-- Accepts URIs that begin with "example://gizmos” -->
+            <data android:scheme="arclassroom"
+                  android:host="app" />
+        </intent-filter>
+        <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+            <data android:scheme="http"
+                  android:host="www.arclassroom.com"
+                  android:pathPrefix="/app" />
+            <!-- note that the leading "/" is required for pathPrefix-->
         </intent-filter>
       </activity>
       <meta-data android:name="com.google.ar.core" android:value="optional" />
