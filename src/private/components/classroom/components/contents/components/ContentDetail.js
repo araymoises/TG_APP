@@ -92,7 +92,7 @@ const ContentDetail = ({ navigation, route }) => {
 
   return (
     <View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start', paddingHorizontal: 20, paddingVertical: 20 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start', paddingHorizontal: 20, paddingVertical: 20, paddingBottom: 100 }}>
         {
           content ?
             content.description.length ? (
@@ -152,15 +152,17 @@ const ContentDetail = ({ navigation, route }) => {
                   ) : <View></View>
                 }
 
-                {isTeacher ?
-                  (
-                    <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="edit" size={15} color={style.color.secondary} />} _text={{ color: style.color.secondary }} onPress={onEdit}>Editar Contenido</Button>
-                  ) : <View></View>
-                }
+
               </>
 
             ) : <Text style={{ ...style.text.sm, lineHeight: 20 }}>Sin secciones creadas</Text>
             : <Text style={{ ...style.text.sm, lineHeight: 20 }}>Cargando contenido...</Text>
+
+        }
+        {isTeacher ?
+          (
+            <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="edit" size={15} color={style.color.secondary} />} _text={{ color: style.color.secondary }} onPress={onEdit}>Editar Contenido</Button>
+          ) : <View></View>
         }
       </ScrollView>
 
