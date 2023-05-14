@@ -87,8 +87,8 @@ const ContentsList = ({ navigation, route }) => {
           (
             contents.map((content, index) => {
               return (
-                <View mt={2} key={content.key} style={{ flex: 1 }}>
-                  <VStack mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
+                <View mt={2} key={index} style={{ flex: 1 }}>
+                  <VStack key={index} mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 5 }}>
                     <Pressable paddingLeft={2} style={{ height: '100%', width: '100%', flexDirection: 'row', aligncontents: 'center' }} onPress={(event) => onPressElement(content.id)}>
                       <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
                         {/* <Icon name="graduation-cap" size={40} color="#F6F6F6" /> */}

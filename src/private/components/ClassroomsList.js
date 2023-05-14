@@ -33,11 +33,11 @@ const Classrooms = ({ navigation, route }) => {
   const navigate = navigation.navigate;
   const dispatch = useDispatch();
   const [classrooms, setClassrooms] = useState([]);
-  const [message,setMessage]= useState('');
-  const [messageSuccess,setMessageSuccess] = useState('');
-  const [isTeacher,setIsTeacher] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messageSuccess, setMessageSuccess] = useState('');
+  const [isTeacher, setIsTeacher] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  
+
   const onCreate = () => {
     navigate('ClassroomAdminRouter', { screen: 'CreateClassroom' });
   }
@@ -60,27 +60,30 @@ const Classrooms = ({ navigation, route }) => {
         else {
           setMessage('Ha ocurrido un error interno');
         }
-
       });
   }
 
   useEffect(() => {
     loadClassrooms()
-  }, [classrooms])
+    console.log('route');
+    console.log(route);
+    console.log('navigation');
+    console.log(navigation.getId());
+  }, [route])
 
   const getUser = async () => {
     const user = await getUserData();
     if (user.teacher) {
       setIsTeacher(true);
     }
-
   }
+
   useEffect(() => {
     getUser()
   }, [])
 
   useEffect(() => {
-    console.log('useEffect called:'+route.params?.messageSuccess);
+    console.log('useEffect called:' + route.params?.messageSuccess);
     if (route.params?.messageSuccess) {
       setMessageSuccess(route.params.messageSuccess)
       setShowAlert(true);
@@ -90,7 +93,7 @@ const Classrooms = ({ navigation, route }) => {
       }, 3000);
     }
   }, [route.params?.messageSuccess]);
-  
+
   return (
     <View style={{ flex: 1 }} >
       <ScrollView h="80" _contentContainerStyle={{
@@ -104,9 +107,9 @@ const Classrooms = ({ navigation, route }) => {
           <AlertError error={message} />
           : null
         }
-         {showAlert &&
+        {showAlert &&
           <AlertSuccess success={messageSuccess}
-        />}
+          />}
 
         {classrooms.map((classroom, item) => (
           <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>

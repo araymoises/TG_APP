@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API = "http://192.168.1.121:3000";
+const API = "http://192.168.1.100:3000";
 export const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('token')
@@ -139,9 +139,9 @@ export const deleteStudent = async (student) => {
   return axios.delete(API + '/students/delete/' + student, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
-export const studentInvite = async (student) => {
+export const studentInvite = async (invitation) => {
   const token = await getToken();
-  console.log('Invitar estudiante');
+  return axios.post(`${API}/students/invite/`, invitation, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
 // CRUD Teachers

@@ -31,26 +31,25 @@
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
         android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize">
-        <intent-filter>
+        <intent-filter android:autoVerify="true">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <!-- Accepts URIs that begin with "example://gizmos” -->
-            <data android:scheme="arclassroom"
-                  android:host="app" />
+            <data android:scheme="app"
+                  android:host="arclassroom.app" />
         </intent-filter>
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-        <intent-filter>
+        <intent-filter android:autoVerify="true">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
             <data android:scheme="http"
-                  android:host="www.arclassroom.com"
-                  android:pathPrefix="/app" />
+                  android:host="localhost:3000" />
             <!-- note that the leading "/" is required for pathPrefix-->
         </intent-filter>
       </activity>
