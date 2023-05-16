@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API = "http://192.168.1.100:3000";
+const API = "https://api-arclassroom-tesis.herokuapp.com";
 export const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('token')
@@ -94,6 +94,11 @@ export const getActivities = async (classroom) => {
   return axios.get(`${API}/activities/classroom/${classroom}`, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
+export const deleteActivity = async (activity) => {
+  const token = await getToken();
+  return axios.delete(`${API}/activities/delete/${activity}`, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
 // CRUD qualifications
 export const saveQualification = async (qualification) => {
   const token = await getToken();
@@ -114,6 +119,11 @@ export const getContents = async (classroom) => {
 export const getContentById = async (content) => {
   const token = await getToken();
   return axios.get(`${API}/contents/${content}`, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+export const deleteContent = async (content) => {
+  const token = await getToken();
+  return axios.delete(`${API}/contents/delete/${content}`, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
 //CRUD students
@@ -139,6 +149,13 @@ export const deleteStudent = async (student) => {
   return axios.delete(API + '/students/delete/' + student, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
+export const unlinkStudent = async (student) => {
+  const token = await getToken();
+  console.log('token');
+  console.log(token);
+  return axios.patch(API + '/students/unlink/' + student, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
 export const studentInvite = async (invitation) => {
   const token = await getToken();
   return axios.post(`${API}/students/invite/`, invitation, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -148,4 +165,14 @@ export const studentInvite = async (invitation) => {
 export const updateTeacher = async (teacher, id) => {
   const token = await getToken();
   return axios.patch(`${API}/teachers/update/${id}`, teacher, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+export const getObjects = async () => {
+  const token = await getToken();
+  return axios.get(`${API}/objects/`, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+export const getActivityTypes = async () => {
+  const token = await getToken();
+  return axios.get(`${API}/activity-types/`, { headers: { 'Authorization': `Bearer ${token}` } });
 }
