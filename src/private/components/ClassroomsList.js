@@ -28,10 +28,12 @@ import AlertError from './AlertError';
 import AlertSuccess from './AlertSuccess';
 import { setPlaneSelected } from './../../../../../../redux/reducers/classroomTitle';
 import { setClassroomId } from './../../redux//reducers/classroomId';
+import { useIsFocused } from '@react-navigation/native';
 
 const Classrooms = ({ navigation, route }) => {
   const navigate = navigation.navigate;
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const [classrooms, setClassrooms] = useState([]);
   const [message, setMessage] = useState('');
   const [messageSuccess, setMessageSuccess] = useState('');
@@ -43,6 +45,9 @@ const Classrooms = ({ navigation, route }) => {
   }
 
   const onPressElement = (classroom) => {
+    console.log('---------------------------');
+    console.log(classroom._id);
+    console.log('---------------------------');
     dispatch(setClassroomId(classroom._id))
     navigate('ClassroomRouter', { screen: 'ClassroomDetail', params: { id: classroom._id } });
   }
@@ -69,7 +74,7 @@ const Classrooms = ({ navigation, route }) => {
     console.log(route);
     console.log('navigation');
     console.log(navigation.getId());
-  }, [route])
+  }, [isFocused])
 
   const getUser = async () => {
     const user = await getUserData();
@@ -113,7 +118,6 @@ const Classrooms = ({ navigation, route }) => {
 
         {classrooms.map((classroom, item) => (
           <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>
-
             <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={() => onPressElement(classroom)}>
               <View style={{ flex: 1, marginLeft: 5 }}>
                 <View style={{ backgroundColor: style.color.primary, height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
@@ -123,10 +127,9 @@ const Classrooms = ({ navigation, route }) => {
               <View style={{ flex: 5, paddingLeft: 10 }}>
                 <Text mt={2} style={{ ...style.text.md, fontWeight: 'bold' }}>{classroom.description}</Text>
                 <Text mt={2} style={{ ...style.text.sm }}>Cantidad de alumnos: {classroom.studentsQuantity}</Text>
-                <Text mt={2} style={{ ...style.text.sm }}>Progreso: 42%</Text>
+                <Text mt={2} style={{ ...style.text.sm }}>Progreso: {classroom.activitiesProgress}%</Text>
               </View>
             </Pressable>
-
           </VStack>
         ))}
 

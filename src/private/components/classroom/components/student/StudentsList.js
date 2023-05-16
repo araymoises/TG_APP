@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Text,
   View,
@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import randomColor from '../../../../../services/colorNames';
 import AlertError from '~private/components/AlertError';
 import { useSelector } from 'react-redux';
-
+import { useIsFocused } from '@react-navigation/native';
 import { getStudents } from 'api';
 
 // import { useSelector, useDispatch } from 'react-redux';
@@ -27,6 +27,7 @@ const StudentsList = ({ navigation }) => {
   const navigate = navigation.navigate;
   // const count = useSelector((state) => state.counter.value);
   // const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const classroomId = useSelector((state) => state.classroomId.value);
   const [students, setStudents] = useState([]);
   const [message, setMessage] = useState('');
@@ -36,16 +37,16 @@ const StudentsList = ({ navigation }) => {
     navigate('PrivateRouter', { screen: 'StudentRouter' });
   }
 
-  const onPressElement = (event) => {
+  const onPressElement = (id) => {
     console.log('Pesionando elemento.');
-    // dispatch(increment());
+    navigate('PrivateRouter', { screen: 'StudentRouter', params: { screen: 'StudentDetail', params: { id } } });
   }
 
   const loadStudents = () => {
     setStudents([])
     getStudents(classroomId)
       .then((res) => {
-        setStudents(res.data.content);
+        setStudents(res.data.content ? res.data.content : []);
       })
       .catch((error) => {
         console.log(error);
@@ -61,9 +62,7 @@ const StudentsList = ({ navigation }) => {
 
   useEffect(() => {
     loadStudents()
-  }, [])
-
-
+  }, [isFocused])
 
   return (
     <View style={{ flex: 1, marginLeft: 5, backgroundColor: 'white' }} >
@@ -76,22 +75,25 @@ const StudentsList = ({ navigation }) => {
           <AlertError error={message} />
           : null
         }
-        {students.map((student, item) => (
-
-          <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>
-            <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
-              <View style={{ flex: 1, marginLeft: 5, marginLeft: 5 }}>
-                <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
-                  {/* <Icon name="graduation-cap" size={40} color="#F6F6F6" /> */}
-                  <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>{student.firstname.charAt(0)} {student.lastname.charAt(0)}</Text>
-                </View>
-              </View>
-              <View style={{ flex: 5, paddingLeft: 10 }}>
-                <Text style={{ ...style.text.sm }}>{student.firstname} , {student.lastname}</Text>
-              </View>
-            </Pressable>
-          </VStack>
-        ))}
+        {
+          students && students.length ? (
+            students.map((student, item) => (
+              <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>
+                <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(student.id)}>
+                  <View style={{ flex: 1, marginLeft: 5, marginLeft: 5 }}>
+                    <View style={{ backgroundColor: randomColor(), height: 60, width: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
+                      {/* <Icon name="graduation-cap" size={40} color="#F6F6F6" /> */}
+                      <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>{student.firstname.charAt(0)} {student.lastname.charAt(0)}</Text>
+                    </View>
+                  </View>
+                  <View style={{ flex: 5, paddingLeft: 10 }}>
+                    <Text style={{ ...style.text.sm }}>{student.firstname} {student.lastname}</Text>
+                  </View>
+                </Pressable>
+              </VStack>
+            ))
+          ) : <Text style={{ ...style.text.sm }}>No hay alumnos.</Text>
+        }
       </ScrollView>
 
       <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="plus" size={15} color={style.color.secondary} />} _text={{ color: style.color.secondary }} onPress={onCreate}>Nuevo Alumno</Button>

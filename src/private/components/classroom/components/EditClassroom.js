@@ -24,7 +24,6 @@ const EditClassroom = ({ navigation, route }) => {
   const [classroom, setClassroom] = useState({
     name: '',
     description: ''
-
   })
 
   const { name, description } = classroom;
@@ -41,8 +40,8 @@ const EditClassroom = ({ navigation, route }) => {
   const loadClassroom = () => {
     if (route.params.classroomEdit) {
       setClassroom({
-        name: route.params.classroomEdit.name,
-        description: route.params.classroomEdit.description
+        name: route.params.classroomEdit.name || '',
+        description: route.params.classroomEdit.description || ''
       });
     }
     console.log(route.params.classroomEdit)
@@ -51,7 +50,6 @@ const EditClassroom = ({ navigation, route }) => {
   useEffect(() => {
     loadClassroom()
   }, [route.params.classroomEdit])
-
 
   const onEditClassroom = () => {
     console.log('entre a onEditClassroom')
@@ -72,10 +70,7 @@ const EditClassroom = ({ navigation, route }) => {
             updateError('Ha ocurrido un error interno', setError);
           }
         });
-
-
     }
-
   }
 
   return (

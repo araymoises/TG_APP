@@ -27,7 +27,6 @@ const InviteStudent = ({ navigation }) => {
     }).then((res) => {
       console.log(res.data.content);
       navigate('ClassroomRouter', { screen: 'StudentsList' });
-
     }).catch((error) => {
       setEmail(null)
       console.log('Error:');

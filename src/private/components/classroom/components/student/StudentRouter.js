@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setClassroomTitle } from '../../../../../redux/reducers/classroomTitle';
 
 import InviteStudent from './components/InviteStudent';
+import StudentDetail from './components/StudentDetail';
 
 const StudentRouter = () => {
   const Stack = createNativeStackNavigator();
@@ -13,7 +14,11 @@ const StudentRouter = () => {
   return (
     <Stack.Navigator initialRouteName="InviteStudent">
       <Stack.Screen name="InviteStudent" component={InviteStudent}
-        listeners={() => ({focus: () =>{ dispatch(setClassroomTitle('Invitar Alumno'))} })} 
+        listeners={() => ({ focus: () => { dispatch(setClassroomTitle('Invitar Alumno')) } })}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="StudentDetail" component={StudentDetail}
+        listeners={() => ({ focus: () => { dispatch(setClassroomTitle('Detalle del Alumno')) } })}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

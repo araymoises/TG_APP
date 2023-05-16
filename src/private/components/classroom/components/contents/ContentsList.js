@@ -15,24 +15,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getUserData, getContents } from "../../../../../../api";
 import { useSelector } from 'react-redux';
 import randomColor from '../../../../../services/colorNames';
+import { useIsFocused } from '@react-navigation/native';
 
 const ContentsList = ({ navigation, route }) => {
   const navigate = navigation.navigate;
   const selected = require('./components/images/contents.png')
+  const isFocused = useIsFocused();
   const [isTeacher, setIsTeacher] = useState(false);
-  const [contents, setContents] = useState([
-    { key: 1, name: 'La lectura', icon: 'language', key: 1 },
-    { key: 12, name: 'La materia y la energía', icon: 'tree', key: 2 },
-    { key: 13, name: 'El ordenador', icon: 'desktop', key: 3 },
-    { key: 14, name: 'Tipos de deporte', icon: 'soccer-ball-o', key: 4 },
-    { key: 15, name: 'Dibujo artístico y el color', icon: 'paint-brush', key: 5 },
-    { key: 16, name: 'Historia de Venezuela', icon: 'file-text', key: 6 },
-    { key: 17, name: 'La familia en inglés', icon: 'comments-o', key: 7 },
-    { key: 18, name: 'Números y operaciones', icon: 'superscript', key: 8 },
-    { key: 19, name: 'Música tradicional', icon: 'music', key: 9 },
-    { key: 10, name: 'Tipología climática', icon: 'picture-o', key: 10 },
-
-  ])
+  const [contents, setContents] = useState(null)
   const classroomId = useSelector((state) => state.classroomId.value);
 
 
@@ -57,6 +47,7 @@ const ContentsList = ({ navigation, route }) => {
 
   useEffect(() => {
     getUser()
+    setContents(null)
     getContents(classroomId).then((res) => {
       setContents(res.data.content)
 
@@ -65,7 +56,7 @@ const ContentsList = ({ navigation, route }) => {
       console.log('Error:');
       console.log(error);
     })
-  }, [classroomId])
+  }, [isFocused])
 
   return (
     <View>

@@ -16,7 +16,7 @@ import {
 
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getUserData, getActivityById } from "../../../../../../../api";
+import { getUserData, getActivityById, deleteActivity } from "../../../../../../../api";
 
 const ActivityDetailStudent = ({ navigation, route }) => {
   const id = route.params?.id || '';
@@ -63,8 +63,13 @@ const ActivityDetailStudent = ({ navigation, route }) => {
   }, [id])
 
   const onDelete = () => {
-
-
+    deleteActivity(id).then((res) => {
+      setShowModal(false)
+      navigate('ActivitiesList');
+    }).catch((error) => {
+      console.log('Error:');
+      console.log(error);
+    });
   }
 
   return (
@@ -130,7 +135,7 @@ const ActivityDetailStudent = ({ navigation, route }) => {
                         Cancelar
                       </Button>
                       <Button onPress={() => {
-                        setShowModal(false);
+                        onDelete()
                       }}
                         style={{ backgroundColor: style.color.red }} leftIcon={<Icon name="trash" size={18} color={style.color.white} />} _text={{ color: style.color.secondary }}
                       >

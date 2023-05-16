@@ -19,12 +19,14 @@ import {
   PieChart,
 } from "react-native-chart-kit";
 import { getClassroom, getAcivitiesStatusByClassroom, getBestQualificationAverageByStudent, getQualificationAverageByActivity } from "../../../../../api";
-import { getUserData,deleteClassroom } from "../../../../../api";
+import { getUserData, deleteClassroom } from "../../../../../api";
 import AlertError from '../../AlertError';
+import { useIsFocused } from '@react-navigation/native';
 
 const ClassroomDetail = ({ navigation, route }) => {
   const navigate = navigation.navigate;
   const id = route.params?.id || '';
+  const isFocused = useIsFocused();
   const [classroom, setClassroom] = useState([]);
   const [activitiesStatus, setActivitiesStatus] = useState(null);
   const [activitiesStatusLoading, setActivitiesStatusLoading] = useState(true);
@@ -158,45 +160,47 @@ const ClassroomDetail = ({ navigation, route }) => {
     loadAcivitiesStatusByClassroom(id)
     loadBestQualificationAverageByStudent(id)
     loadQualificationAverageByActivity(id)
-  }, [id])
+  }, [isFocused])
 
   const getUser = async () => {
     const user = await getUserData();
     if (user.teacher) {
       setIsTeacher(true);
     }
-
   }
+
   useEffect(() => {
     getUser()
   }, [isTeacher])
 
   const onDelete = () => {
     deleteClassroom(id)
-    .then((res) => {
-      console.log('Res:')
-      console.log(res.data.message)
-      setShowModal(false)
-      navigate('ClassroomAdminRouter', { screen: 'ClassroomsList',
-      params: { messageSuccess: `${res.data.message}` }
+      .then((res) => {
+        console.log('Res:')
+        console.log(res.data.message)
+        setShowModal(false)
+        navigate('ClassroomAdminRouter', {
+          screen: 'ClassroomsList',
+          params: { messageSuccess: `${res.data.message}` }
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          updateError(error.response.data.message, setError);
+        }
+        else {
+          console.log(error)
+          updateError('Ha ocurrido un error interno', setError);
+        }
       });
-    })
-    .catch((error) => {
-      if(error.response){
-        updateError(error.response.data.message, setError);
-      }
-      else{
-        console.log(error)
-        updateError('Ha ocurrido un error interno', setError);
-      }
-    });
   }
   const onEdit = () => {
     console.log('edit aula');
     navigate('ClassroomAdminRouter',
-    { screen: 'EditClassroom',
-    params: { classroomEdit: classroom}
-    });
+      {
+        screen: 'EditClassroom',
+        params: { classroomEdit: classroom }
+      });
   }
 
   return (

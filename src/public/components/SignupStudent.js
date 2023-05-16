@@ -23,7 +23,7 @@ const SignupStudent = ({ navigation, route }) => {
   const navigate = navigation.navigate;
   const [showPassword, setShowPassword] = React.useState(false);
   const [studentInfo, setStudentInfo] = useState({
-    classroom: '',//Cambiar por el que viene del url
+    classroom: '',
     firstname: '',
     lastname: '',
     email: '',

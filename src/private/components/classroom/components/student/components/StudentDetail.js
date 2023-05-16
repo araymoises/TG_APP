@@ -12,23 +12,19 @@ import {
 } from 'native-base';
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getUserData, getContentById, deleteContent } from "../../../../../../../api";
+import { getUserData, getStudentById, unlinkStudent } from "../../../../../../../api";
 
 const ContentDetail = ({ navigation, route }) => {
   const id = route.params?.id || '';
   const navigate = navigation.navigate;
   const [isTeacher, setIsTeacher] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [content, setContent] = useState(null);
+  const [student, setStudent] = useState(null);
 
   const onActivity = () => {
     console.log('Nuevo contenido.');
     //navigate('ContentsRouter', { screen: 'ContentEdit' });
     navigate('ActivityView');
-  }
-  const onEdit = () => {
-    console.log('Editar contenido.');
-    navigate('ContentsRouter', { screen: 'ContentEdit' });
   }
 
   const getUser = async () => {
@@ -39,20 +35,14 @@ const ContentDetail = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    setContent(null)
+    setStudent(null)
     getUser()
-    getContentById(id).then((res) => {
-      console.log('Content detail response:');
-      let _content = res.data.content
-      _content.description = JSON.parse(_content.description)
-
-      console.log(' _content.description');
-      console.log(_content.description[0]);
-      console.log(res.data.message);
+    getStudentById(id).then((res) => {
+      console.log('Student detail response:');
       console.log(res.data);
-      setContent(_content)
+      setStudent(res.data.content)
     }).catch((error) => {
-      setContent(null)
+      setStudent(null)
       console.log('Error:');
       console.log(error);
     })
@@ -86,52 +76,65 @@ const ContentDetail = ({ navigation, route }) => {
   }
 
   const onDelete = () => {
-    deleteContent(id).then((res) => {
-      setShowModal(false)
-      navigate('ContentsList');
-    }).catch((error) => {
-      console.log('Error:');
-      console.log(error);
-    });
+    setShowModal(false);
+    if (student) {
+      unlinkStudent(student.id).then((res) => {
+        console.log(res.data.content);
+        navigate('ClassroomRouter', { screen: 'StudentsList' });
+      }).catch((error) => {
+        console.log('Error:');
+        console.log(error.response);
+      })
+    }
   }
 
   return (
     <View>
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start', paddingHorizontal: 20, paddingVertical: 20, paddingBottom: 100 }}>
         {
-          content ?
+          student ? (
             <>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 3 }}>
-                  <Text marginBottom={5} marginTop={5} style={{ ...style.text.title, color: style.color.primary, fontWeight: 'bold' }}>{content.name}</Text>
+                  <Text marginTop={5} style={{ ...style.text.title, color: style.color.primary, fontWeight: 'bold' }}>{student.firstname + ' ' + student.lastname}</Text>
                 </View>
-                {isTeacher &&
-                  (
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                      <Button style={{ backgroundColor: style.color.red, borderRadius: 20 }} leftIcon={<Icon name="trash" size={18} color={style.color.white} />} _text={{ color: style.color.secondary }} onPress={() => setShowModal(true)}></Button>
-                    </View>
-                  )
+                {
+                  isTeacher ?
+                    (
+                      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <Button style={{ backgroundColor: style.color.red, borderRadius: 20 }} leftIcon={<Icon name="trash" size={18} color={style.color.white} />} _text={{ color: style.color.secondary }} onPress={() => setShowModal(true)}></Button>
+                      </View>
+                    ) : <View></View>
                 }
               </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flex: 1 }}>
+                  <Text marginBottom={5} marginTop={5} style={{ ...style.text.md, color: style.color.primary, fontWeight: 'bold' }}>Correo: {student.email}</Text>
+                </View>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flex: 1 }}>
+                  <Text marginTop={5} style={{ ...style.text.subtitle, color: style.color.tertiary, fontWeight: 'bold' }}>Actividades finalizadas:</Text>
+                </View>
+              </View>
+
               {
-                content.description.length ? (
-                  content.description.map((section, index) => {
-                    return (
-                      <Pressable key={index}>
-                        <View key={index} style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%' }}>
-                          <Text style={sectionTextStyle(section.sectionType)} >{section.sectionText}</Text>
-                        </View>
-                      </Pressable>
-                    )
-                  })
-                ) : <Text style={{ ...style.text.sm, lineHeight: 20 }}>Sin secciones creadas</Text>
+                student.qualifications.length ? (
+                  student.qualifications.map((qualification) =>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <View style={{ flex: 1 }}>
+                        <Text marginLeft={5} marginTop={5} style={{ ...style.text.md, color: style.color.primary, fontWeight: '500' }}>{qualification.activity.name + ': ' + qualification.qualification + ' puntos.'}</Text>
+                      </View>
+                    </View>
+                  )
+                ) : <Text marginLeft={5} style={{ ...style.text.sm, lineHeight: 20 }}>No ha realizado ninguna actividad.</Text>
               }
 
               <Center>
                 <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                   <Modal.Content maxWidth="400px">
                     <Modal.Body>
-                      <Text style={{ ...style.text.sm, lineHeight: 20 }}>¿Está seguro que desea eliminar el contenido?</Text>
+                      <Text style={{ ...style.text.sm, lineHeight: 20 }}>¿Está seguro que desea eliminar el alumno del aula?</Text>
                     </Modal.Body>
                     <Modal.Footer borderTopWidth={0}>
                       <Button.Group space={2}>
@@ -141,7 +144,7 @@ const ContentDetail = ({ navigation, route }) => {
                           Cancelar
                         </Button>
                         <Button onPress={() => {
-                          onDelete();
+                          onDelete()
                         }}
                           style={{ backgroundColor: style.color.red }} leftIcon={<Icon name="trash" size={18} color={style.color.white} />} _text={{ color: style.color.secondary }}
                         >
@@ -157,18 +160,17 @@ const ContentDetail = ({ navigation, route }) => {
                   <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} rightIcon={<Icon name="play" size={15} color={style.color.secondary} />} _text={{ color: style.color.secondary }} onPress={onActivity}>Realizar actividad</Button>
                 ) : <View></View>
               }
-            </>
-            : <Text style={{ ...style.text.sm, lineHeight: 20 }}>Cargando contenido...</Text>
 
-        }
-        {isTeacher ?
-          (
-            <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} leftIcon={<Icon name="edit" size={15} color={style.color.secondary} />} _text={{ color: style.color.secondary }} onPress={onEdit}>Editar Contenido</Button>
-          ) : <View></View>
+
+            </>
+
+          )
+            : <Text style={{ ...style.text.sm, lineHeight: 20 }}>Cargando datos del alumno...</Text>
+
         }
       </ScrollView>
 
-    </View>
+    </View >
 
 
 
