@@ -120,9 +120,9 @@ const ContentDetail = ({ navigation, route }) => {
 
               {
                 student.qualifications.length ? (
-                  student.qualifications.map((qualification) =>
+                  student.qualifications.map((qualification,  item) =>
                     qualification.activity ? (
-                      <View key={qualification.id} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <View key={ item} style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flex: 1 }}>
                           <Text marginLeft={5} marginTop={5} style={{ ...style.text.md, color: style.color.primary, fontWeight: '500' }}>{qualification.activity.name + ': ' + qualification.qualification + ' puntos.'}</Text>
                         </View>
