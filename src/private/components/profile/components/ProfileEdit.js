@@ -10,41 +10,101 @@ import {
   Box,
   Select,
   CheckIcon,
+  Text
 } from 'native-base';
 import style from '~styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getUserData } from 'api';
+import { useSelector } from 'react-redux';
+import { getUserData, updateTeacher } from 'api';
+import { updateStudent } from 'api';
+import { updateTeacherById } from 'api';
+
+import { setClassroomId } from '~redux/reducers/classroomId';
+import {isValidObjField, isValidEmail, updateError} from '../../../../validations/Validations'
+
 
 const ProfileEdit = ({ navigation }) => {
 
   const selected = require('./images/profileEdit.png')
-
-  let [content, setContent] = useState("");
   const navigate = navigation.navigate;
   const [showPassword, setShowPassword] = React.useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
+  const [userId, setUserId] = useState('');
   const [user, setUser] = useState(null);
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
-  const [email, setEmail] = useState('')
+  const [userInfo, setUserInfo] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: ''
+
+  })
+
+  const { firstname, lastname, email, password, classroom } = userInfo;
+  const [error, setError] = useState('');
 
   const togglePassword = () => setShowPassword(!showPassword);
 
-  const onSignup = () => {
-    console.log('Ir al register');
-    navigate('PublicRouter', { screen: 'Signup' });
+  const handleOnChangeText = (value, fieldName) => { setUserInfo({ ...userInfo, [fieldName]: value }) }
+  const isValidForm = () => {
+    if (!isValidObjField(userInfo)) return updateError('Debe llenar todos los campos', setError)
+
+    if (!firstname.trim() || firstname.length < 3) return updateError('El nombre debe ser mayor a 3 letras', setError)
+
+    if (!lastname.trim() || lastname.length < 3) return updateError('El apellido debe ser mayor a 3 letras', setError)
+
+    if (!isValidEmail(email)) return updateError('Email invalido', setError)
+
+    if (!password.trim() || password.length < 8) return updateError('La contraseña debe tener más de 8 caracteres', setError)
+
+    return true;
   }
 
-  const onChangeFirstname = (value) => {
-    setFirstname(value)
+  const onEditStudent = () => {
+    console.log('entre a onEditStudent')
+    if (isValidForm()) {
+     
+      updateStudent(userInfo,userId).then((res) => {
+        if (res.data.success) {
+          setUserInfo({ firstname: '', lastname: '', email: '', password: ''});
+          navigate('PublicRouter', {
+            screen: 'Login',
+            params: { messageSuccess: `${res.data.message}` }
+          });
+        }
+      }).catch(error => {
+        if (error.response) {
+          updateError(error.response.data.message, setError);
+        }
+        else {
+          console.log(error);
+          updateError('Ha ocurrido un error interno.', setError);
+        }
+      });
+    }
   }
 
-  const onChangeLastname = (value) => {
-    setLastname(value)
-  }
-
-  const onChangeEmail = (value) => {
-    setEmail(value)
+  const onEditTeacher = () => {
+    console.log('entre a onEditTeacher')
+    if (isValidForm()) {
+     
+      updateTeacherById(userInfo,userId).then((res) => {
+        if (res.data.success) {
+          setUserInfo({ firstname: '', lastname: '', email: '', password: ''});
+          navigate('PublicRouter', {
+            screen: 'Login',
+            params: { messageSuccess: `${res.data.message}` }
+          });
+        }
+      }).catch(error => {
+        if (error.response) {
+          updateError(error.response.data.message, setError);
+        }
+        else {
+          console.log(error);
+          updateError('Ha ocurrido un error interno.', setError);
+        }
+      });
+    }
   }
 
   const getUser = async () => {
@@ -55,18 +115,35 @@ const ProfileEdit = ({ navigation }) => {
 
     if (userData.teacher) {
       setIsTeacher(true);
-      setFirstname(userData.teacher.firstname)
-      setLastname(userData.teacher.lastname)
-      setEmail(userData.teacher.email)
+      setUserInfo({
+        ...userInfo,
+        firstname: userData.teacher.firstname,
+        lastname: userData.teacher.lastname,
+        email: userData.teacher.email,
+        password: ''
+      })
+      setUserId(userData.teacher._id)
+
     } else {
-      setFirstname(userData.student.firstname)
-      setLastname(userData.student.lastname)
-      setEmail(userData.student.email)
+      setUserInfo({
+        ...userInfo,
+        firstname: userData.student.firstname,
+        lastname: userData.student.lastname,
+        email: userData.student.email,
+        password: ''
+      })
+      setUserId(userData.student._id)
+
+      
     }
   }
 
   useEffect(() => {
     getUser()
+  }, [])
+
+  useEffect(() => {
+    setUserInfo({ ...userInfo})
   }, [])
 
   return (
@@ -84,21 +161,30 @@ const ProfileEdit = ({ navigation }) => {
         />
 
         <View style={{ flex: 4, paddingHorizontal: 20, paddingBottom: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
+        {error ? <Text style={{ color: 'red', fontSize: 18, textAlign: 'center' }}>{error}</Text> : null}
           <Center>
             <Stack mt={2} space={4} w="100%" maxW="400px">
-              <Input size="lg" variant="underlined" placeholder="Nombre" value={firstname} onChangeText={(value) => onChangeFirstname(value)} />
-              <Input size="lg" variant="underlined" placeholder="Apellido" value={lastname} onChangeText={(value) => onChangeLastname(value)} />
-              <Input size="lg" variant="underlined" placeholder="Email" value={email} onChangeText={(value) => onChangeEmail(value)} />
-              {/* <Box>
+            <Input size="lg" variant="underlined" placeholder="Nombre" value={firstname} onChangeText={(value) => handleOnChangeText(value, 'firstname')} />
+              <Input size="lg" variant="underlined" placeholder="Apellido" value={lastname} onChangeText={(value) => handleOnChangeText(value, 'lastname')} />
+              <Input size="lg" variant="underlined" placeholder="Email" autoCapitalize='none' value={email} onChangeText={(value) => handleOnChangeText(value, 'email')} />
+              <Box>
                 <Input type={showPassword ? "text" : "password"} size="lg" variant="underlined"
                   InputRightElement={
                     <Button style={{ backgroundColor: 'white' }} size="sm" rounded="none" w="1/6" h="full" onPress={togglePassword}>
                       {showPassword ? <Icon name="eye-slash" size={20} color={style.color.primary} /> : <Icon name="eye" size={20} color={style.color.primary} />}
                     </Button>
                   }
-                  placeholder="Contraseña" />
-              </Box> */}
-              <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} onPress={onSignup}>Editar</Button>
+                  placeholder="Contraseña"
+                  value={password}
+                  onChangeText={(value) => handleOnChangeText(value, 'password')}
+                />
+              </Box>
+             
+              {isTeacher && user && user.teacher ?
+               <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} onPress={onEditTeacher}>Editar Docente</Button>
+              :
+              <Button style={{ ...style.button.primary }} _text={{ color: style.color.secondary }} onPress={onEditStudent}>Editar</Button>
+            }
             </Stack>
           </Center>
         </View>

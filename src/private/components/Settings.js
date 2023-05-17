@@ -145,7 +145,7 @@ const Settings = ({ navigation }) => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '100%', borderRadius: 5 }}>
+         {/*<VStack mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '100%', borderRadius: 5 }}>
           <Pressable paddingLeft={2} style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onResetPassword(event)}>
             <View style={{ backgroundColor: style.color.primary, height: 50, width: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
               <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>
@@ -157,7 +157,7 @@ const Settings = ({ navigation }) => {
             </View>
           </Pressable>
         </VStack>
-        <VStack mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '100%', borderRadius: 5 }}>
+       <VStack mt={5} space={4} w="100%" style={{ backgroundColor: '#F6F6F6', height: 80, width: '100%', borderRadius: 5 }}>
           <Pressable paddingLeft={2} style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={(event) => onPressElement(event)}>
             <View style={{ backgroundColor: style.color.primary, height: 50, width: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 45 }}>
               <Text style={{ ...style.text.title, color: style.color.secondary, fontWeight: 'bold', fontSize: 20 }}>
@@ -168,7 +168,7 @@ const Settings = ({ navigation }) => {
               <Text style={{ ...style.text.subtitle, fontWeight: 'bold', color: style.color.primary, fontSize: 18 }}>Borrar datos</Text>
             </View>
           </Pressable>
-        </VStack>
+      </VStack>*/}
 
       </View>
 

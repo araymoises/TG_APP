@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const API = "https://api-arclassroom-tesis.herokuapp.com";
+//const API = "http://192.168.100.3:3000";
 export const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('token')
@@ -66,6 +67,11 @@ export const updateClassroom = async (classroom, id) => {
   console.log('classroom')
   console.log(classroom)
   return axios.patch(API + '/classrooms/update/' + id, classroom, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+export const updateTeacherById = async (teacher, id) => {
+  const token = await getToken();
+  return axios.patch(API + '/teachers/update/' + id, teacher, { headers: { 'Authorization': `Bearer ${token}` } });
 }
 
 // Statistics
