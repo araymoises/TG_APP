@@ -96,7 +96,7 @@ const ActivityDetailStudent = ({ navigation, route }) => {
             <Text mt={4} style={{ textAlign: 'left', fontSize: 16 }} >Contenido: {activity.content.name}</Text>
             <Text mt={4} style={{ textAlign: 'left', fontSize: 16 }} >Ponderación: {activity.max_qualification} puntos</Text>
             <Text mt={4} style={{ textAlign: 'left', fontSize: 16 }} >Fecha de inicio: {activity.startDate.split('T')[0].split('-').reverse().join('-')}</Text>
-            <Text mt={4} style={{ textAlign: 'left', fontSize: 16 }} >Fecha de inicio: {activity.finishDate.split('T')[0].split('-').reverse().join('-')}</Text>
+            <Text mt={4} style={{ textAlign: 'left', fontSize: 16 }} >Fecha tope: {activity.finishDate.split('T')[0].split('-').reverse().join('-')}</Text>
             <View mt={4}>
               <Icon name="star" size={25} color={style.color.amber} mx="auto" style={{ textAlign: 'left' }} />
             </View>

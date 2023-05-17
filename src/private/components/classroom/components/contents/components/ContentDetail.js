@@ -21,11 +21,6 @@ const ContentDetail = ({ navigation, route }) => {
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState(null);
 
-  const onActivity = () => {
-    console.log('Nuevo contenido.');
-    //navigate('ContentsRouter', { screen: 'ContentEdit' });
-    navigate('ActivityView');
-  }
   const onEdit = () => {
     console.log('Editar contenido.');
     navigate('ContentsRouter', { screen: 'ContentEdit' });
@@ -152,11 +147,6 @@ const ContentDetail = ({ navigation, route }) => {
                   </Modal.Content>
                 </Modal>
               </Center>
-              {!isTeacher ?
-                (
-                  <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} rightIcon={<Icon name="play" size={15} color={style.color.secondary} />} _text={{ color: style.color.secondary }} onPress={onActivity}>Realizar actividad</Button>
-                ) : <View></View>
-              }
             </>
             : <Text style={{ ...style.text.sm, lineHeight: 20 }}>Cargando contenido...</Text>
 

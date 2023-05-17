@@ -116,7 +116,7 @@ const Classrooms = ({ navigation, route }) => {
           <AlertSuccess success={messageSuccess}
           />}
 
-        {classrooms.map((classroom, item) => (
+        {classrooms && classrooms.length ? (classrooms.map((classroom, item) => (
           <VStack mt={5} key={item} space={4} w="100%" maxW="400px" style={{ backgroundColor: '#F6F6F6', height: 80, width: '95%', borderRadius: 10, elevation: 5, backgroundColor: '#F6F6F6' }}>
             <Pressable style={{ height: '100%', width: '100%', flexDirection: 'row', alignItems: 'center' }} onPress={() => onPressElement(classroom)}>
               <View style={{ flex: 1, marginLeft: 5 }}>
@@ -131,7 +131,8 @@ const Classrooms = ({ navigation, route }) => {
               </View>
             </Pressable>
           </VStack>
-        ))}
+        ))) : <View></View>
+        }
 
       </ScrollView>
       {isTeacher &&
