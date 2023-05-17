@@ -117,8 +117,8 @@ const ContentDetail = ({ navigation, route }) => {
                 content.description.length ? (
                   content.description.map((section, index) => {
                     return (
-                      <Pressable key={index}>
-                        <View key={index} style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%' }}>
+                      <Pressable key={new Date().toISOString() + index}>
+                        <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%' }}>
                           <Text style={sectionTextStyle(section.sectionType)} >{section.sectionText}</Text>
                         </View>
                       </Pressable>

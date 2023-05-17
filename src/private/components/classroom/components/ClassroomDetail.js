@@ -135,6 +135,8 @@ const ClassroomDetail = ({ navigation, route }) => {
     getQualificationAverageByActivity(id)
       .then((res) => {
         if (res.data.content) {
+          console.log('res.data.content.chart');
+          console.log(res.data.content.chart.datasets);
           setQualificationAverageByActivity(res.data.content.chart);
         } else {
           setQualificationAverageByActivity(null);
@@ -282,10 +284,10 @@ const ClassroomDetail = ({ navigation, route }) => {
         <View style={{ flex: 2, width: '100%', padding: 20 }}>
           <Text mt={2} style={{ ...style.text.subtitle }}>Calificación promedio por mes</Text>
           {!qualificationAverageByActivityLoading ?
-            (qualificationAverageByActivity ? <LineChart
+            (qualificationAverageByActivity && qualificationAverageByActivity.datasets[0].data.length ? <LineChart
               data={qualificationAverageByActivity}
               width={screenWidth}
-              height={180}
+              height={220}
               yAxisSuffix="pts"
               yAxisInterval={1}
               chartConfig={{
@@ -301,6 +303,7 @@ const ClassroomDetail = ({ navigation, route }) => {
                   stroke: "#F1F1F1"
                 }
               }}
+              verticalLabelRotation={8}
               bezier
               style={{
                 marginVertical: 8,

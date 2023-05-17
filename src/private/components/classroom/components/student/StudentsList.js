@@ -34,7 +34,7 @@ const StudentsList = ({ navigation }) => {
 
   const onCreate = () => {
     console.log('Nuevo elemento.');
-    navigate('PrivateRouter', { screen: 'StudentRouter' });
+    navigate('PrivateRouter', { screen: 'StudentRouter', params: { screen: 'InviteStudent' } });
   }
 
   const onPressElement = (id) => {

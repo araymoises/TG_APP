@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API = "https://api-arclassroom-tesis.herokuapp.com";
+const API = "http://192.168.1.100:3000";
+//const API = "https://api-arclassroom-tesis.herokuapp.com";
 export const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('token')
@@ -98,6 +99,17 @@ export const deleteActivity = async (activity) => {
   const token = await getToken();
   return axios.delete(`${API}/activities/delete/${activity}`, { headers: { 'Authorization': `Bearer ${token}` } });
 }
+
+export const saveActivity = async (activity) => {
+  const token = await getToken();
+  return axios.post(`${API}/activities/save/`, activity, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+export const saveAnswers = async (answers) => {
+  const token = await getToken();
+  return axios.post(`${API}/answers/save/`, answers, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
 
 // CRUD qualifications
 export const saveQualification = async (qualification) => {

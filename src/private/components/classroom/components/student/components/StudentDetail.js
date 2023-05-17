@@ -121,11 +121,13 @@ const ContentDetail = ({ navigation, route }) => {
               {
                 student.qualifications.length ? (
                   student.qualifications.map((qualification) =>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <View style={{ flex: 1 }}>
-                        <Text marginLeft={5} marginTop={5} style={{ ...style.text.md, color: style.color.primary, fontWeight: '500' }}>{qualification.activity.name + ': ' + qualification.qualification + ' puntos.'}</Text>
+                    qualification.activity ? (
+                      <View key={qualification.id} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ flex: 1 }}>
+                          <Text marginLeft={5} marginTop={5} style={{ ...style.text.md, color: style.color.primary, fontWeight: '500' }}>{qualification.activity.name + ': ' + qualification.qualification + ' puntos.'}</Text>
+                        </View>
                       </View>
-                    </View>
+                    ) : <View></View>
                   )
                 ) : <Text marginLeft={5} style={{ ...style.text.sm, lineHeight: 20 }}>No ha realizado ninguna actividad.</Text>
               }
@@ -155,13 +157,6 @@ const ContentDetail = ({ navigation, route }) => {
                   </Modal.Content>
                 </Modal>
               </Center>
-              {!isTeacher ?
-                (
-                  <Button style={{ ...style.button.primary, position: 'absolute', bottom: 10, right: 10, borderRadius: 20, elevation: 5 }} rightIcon={<Icon name="play" size={15} color={style.color.secondary} />} _text={{ color: style.color.secondary }} onPress={onActivity}>Realizar actividad</Button>
-                ) : <View></View>
-              }
-
-
             </>
 
           )

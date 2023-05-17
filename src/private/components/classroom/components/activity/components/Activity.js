@@ -275,8 +275,6 @@ const Activity = ({ navigation, route }) => {
     console.log('answer.id');
     activity.answers.map((answer) => {
       console.log(answer.id);
-      console.log('selectedAnswers.includes(answer.id)');
-      console.log(selectedAnswers.includes(answer.id));
       console.log('answer.isCorrect');
       console.log(answer.isCorrect);
       if (selectedAnswers.includes(answer.id) == answer.isCorrect) {
@@ -285,10 +283,10 @@ const Activity = ({ navigation, route }) => {
       }
     })
 
-    const { id } = await getUserData()
+    const user = await getUserData()
     let qualification = {
       activity: activity.id,
-      student: id
+      student: user.student.id
     }
 
     let result

@@ -26,7 +26,6 @@ const ActivityCompletion = ({ route, navigation }) => {
       <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center', width: '100%', backgroundColor: 'white' }}>
         <Text style={{ color: style.color.primary, fontWeight: 'bold', fontSize: 21, textAlign: 'center', marginTop: 10 }} >Has finalizado la actividad</Text>
         <Text style={{ color: style.color.primary, fontWeight: 'bold', fontSize: 18, textAlign: 'center' }} >{isCorrect ? 'Has respondido correctamente, ¡felicidades!' : 'Has respondido incorrectamente.'}</Text>
-        <Text style={{ color: style.color.tertiary, fontWeight: 'bold', fontSize: 18, textAlign: 'center' }} >{isCorrect ? '' : `Respuesta correcta: Halcón`}</Text>
         <Image
           justifyContent="center"
           alignItems="center"

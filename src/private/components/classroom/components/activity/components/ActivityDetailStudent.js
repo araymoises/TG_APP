@@ -79,7 +79,7 @@ const ActivityDetailStudent = ({ navigation, route }) => {
           <>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ flex: 3 }}>
-                <Text style={{ color: style.color.primary, fontWeight: 'bold', fontSize: 20, textAlign: 'left' }} >Actividad: Reconociendo las Emociones</Text>
+                <Text style={{ color: style.color.primary, fontWeight: 'bold', fontSize: 20, textAlign: 'left' }} >{activity.name}</Text>
               </View>
               {isTeacher &&
                 (
