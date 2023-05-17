@@ -16,7 +16,8 @@ import {
 import style from '~styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getUserData } from 'api';
+import { useSelector } from 'react-redux';
+import { getUserData, getActivities,getContents } from 'api';
 
 const Settings = ({ navigation }) => {
 
@@ -27,6 +28,9 @@ const Settings = ({ navigation }) => {
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [email, setEmail] = useState('')
+  const classroomId = useSelector((state) => state.classroomId.value);
+  const [activities, setActivities] = useState(null);
+  const [contents, setContents] = useState(null)
 
   const navigate = navigation.navigate;
 
@@ -60,6 +64,26 @@ const Settings = ({ navigation }) => {
   }
   useEffect(() => {
     getUser()
+    setActivities(null)
+    getActivities(classroomId).then((res) => {
+      console.log('Activities list response:');
+      console.log(res.data.message);
+      setActivities(res.data.content)
+    }).catch((error) => {
+      setActivities(null)
+      console.log('Error:');
+      console.log(error);
+    })
+
+    setContents(null)
+    getContents(classroomId).then((res) => {
+      setContents(res.data.content)
+
+    }).catch((error) => {
+      setContents(null)
+      console.log('Error:');
+      console.log(error);
+    })
   }, [])
 
   useEffect(() => {
@@ -94,7 +118,7 @@ const Settings = ({ navigation }) => {
           <Text style={{ color: style.color.primary, fontWeight: 'bold' }}>{email}</Text>
         </VStack>
       </Center>
-      {!isTeacher &&
+      {/*{!isTeacher &&
         (
           <VStack w="100%" space={4} px="2" alignItems="center" justifyContent="center">
 
@@ -111,7 +135,7 @@ const Settings = ({ navigation }) => {
 
             </Stack>
           </VStack>
-        )}
+        )}*/}
       <VStack w="100%" space={4} px="2" mt="4" alignItems="center" justifyContent="space-between">
         <Stack mb="2.5" mt="1.5" flexDirection="row" space={2} mx={{
           base: "auto",
@@ -119,12 +143,12 @@ const Settings = ({ navigation }) => {
         }}>
           <Button size="sm" backgroundColor={style.color.primary} margin={2} padding={4} style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Icon name="file-text" size={25} color={style.color.amber} mx="auto" style={{ textAlign: 'center' }} />
-            <Text mt={2} style={{ textAlign: 'center', fontSize: 20 }} color={style.color.secondary}>10</Text>
+            <Text mt={2} style={{ textAlign: 'center', fontSize: 20 }} color={style.color.secondary}>{contents?.length ?? 0}</Text>
             CONTENIDOS
           </Button>
           <Button size="sm" backgroundColor={style.color.primary} margin={2} padding={4} style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Icon name="trophy" size={25} color={style.color.amber} mx="auto" style={{ textAlign: 'center' }} />
-            <Text mt={2} style={{ textAlign: 'center', fontSize: 20 }} color={style.color.secondary}>15</Text>
+            <Text mt={2} style={{ textAlign: 'center', fontSize: 20 }} color={style.color.secondary}>{activities?.length ?? 0}</Text>
             ACTIVIDADES
           </Button>
         </Stack>
